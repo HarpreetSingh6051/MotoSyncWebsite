@@ -8,28 +8,34 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: {
-          950: '#060709',
-          900: '#0d0f14',
-          850: '#12151c',
-          800: '#171b24',
-          700: '#232936',
-          600: '#343d4f',
+        black: '#000000',
+        surface: {
+          950: '#000000',
+          900: '#04060A',
+          850: '#080C14',
+          800: '#0E1422',
+          750: '#141C2E',
+          700: '#1A243B',
+          600: '#2A3754',
         },
-        cyber: {
-          500: '#06b6d4',
-          400: '#22d3ee',
-          300: '#67e8f9',
-          200: '#a5f3fc',
+        electric: {
+          500: '#10B1FB',
+          400: '#38BDF8',
+          300: '#7DD3FC',
+          600: '#0284C7',
+          700: '#0369A1',
         },
-        amber: {
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706',
-        },
-        crimson: {
-          500: '#f43f5e',
-          400: '#fb7185',
+        neon: {
+          purple: '#8B5CF6',
+          violet: '#A855F7',
+          fuchsia: '#D946EF',
+          pink: '#EC4899',
+          red: '#EF4444',
+          crimson: '#F43F5E',
+          amber: '#F59E0B',
+          yellow: '#FBBF24',
+          emerald: '#10B981',
+          cyan: '#06B6D4',
         },
       },
       fontFamily: {
@@ -37,28 +43,30 @@ export default {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       animation: {
-        'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'radar-sweep': 'radar-sweep 4s linear infinite',
-        'spin-slow': 'spin 18s linear infinite',
-        'float-slow': 'float 6s ease-in-out infinite',
+        'radar-sweep': 'radar-sweep 3.5s linear infinite',
+        'spin-slow': 'spin 22s linear infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'laser-scan': 'laser-scan 3s ease-in-out infinite',
+        'float': 'float 5s ease-in-out infinite',
       },
       keyframes: {
-        'pulse-glow': {
-          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
-          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
-        },
         'radar-sweep': {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        'laser-scan': {
+          '0%, 100%': { transform: 'translateY(-100%)', opacity: '0.1' },
+          '50%': { transform: 'translateY(100%)', opacity: '0.8' },
+        },
         'float': {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
+          '50%': { transform: 'translateY(-8px)' },
         },
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'cyber-grid': 'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)',
+        'industrial-grid': 'linear-gradient(to right, rgba(16, 177, 251, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(16, 177, 251, 0.05) 1px, transparent 1px)',
+        'dots-pattern': 'radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)',
       },
     },
   },
