@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #000000;
+  }
+
+  body {
+    background-color: #000000;
+    color: #f8fafc;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Glassmorphism Cards with Thin Glowing Borders */
+.glass-card {
+  background: rgba(5, 7, 11, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9);
+}
+
+.glass-card-blue {
+  background: rgba(6, 12, 22, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(16, 177, 251, 0.28);
+  box-shadow: 0 0 35px -8px rgba(16, 177, 251, 0.25);
+}
+
+.glass-card-purple {
+  background: rgba(12, 8, 22, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  box-shadow: 0 0 35px -8px rgba(139, 92, 246, 0.25);
+}
+
+/* Glowing text effects */
+.glow-blue {
+  text-shadow: 0 0 25px rgba(16, 177, 251, 0.75);
+}
+
+.glow-purple {
+  text-shadow: 0 0 25px rgba(139, 92, 246, 0.75);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 177, 251, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 177, 251, 0.8);
+}
