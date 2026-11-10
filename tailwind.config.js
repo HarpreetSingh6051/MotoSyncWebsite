@@ -9,32 +9,30 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        studio: {
-          50: '#FAFAFC',
-          100: '#F4F5F8',
-          150: '#ECEEF2',
-          200: '#E2E5EB',
-          300: '#D1D6E0',
-          400: '#9CA3AF',
-          500: '#6B7280',
-          600: '#4B5563',
-          700: '#374151',
-          800: '#1F2937',
-          900: '#111827',
-          950: '#090A0F',
+        void: '#0a0a0a',
+        charcoal: '#121212',
+        surface: {
+          DEFAULT: '#18181b',
+          border: 'rgba(255, 255, 255, 0.1)',
+          glass: 'rgba(24, 24, 27, 0.75)',
         },
-        obsidian: '#090A0F',
-        charcoal: '#1A1C23',
-        slateText: {
-          heading: '#090A0F',
-          body: '#334155',
-          muted: '#64748B',
-          light: '#94A3B8',
+        cyan: {
+          400: '#38bdf8',
+          500: '#00f3ff',
+          glow: 'rgba(0, 243, 255, 0.4)',
         },
+        orange: {
+          400: '#fb923c',
+          500: '#ff6b00',
+          glow: 'rgba(255, 107, 0, 0.4)',
+        },
+        textHeading: '#f4f4f5',
+        textSupport: '#a1a1aa',
+        textMuted: '#71717a',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['"Space Grotesk"', 'sans-serif'],
+        display: ['"Space Grotesk"', '"Outfit"', 'sans-serif'],
         mono: ['"Space Grotesk"', 'monospace'],
         telemetry: ['"JetBrains Mono"', 'monospace'],
       },
@@ -45,8 +43,8 @@ module.exports = {
       },
       animation: {
         'radar-sweep': 'radar-sweep 3s linear infinite',
-        'spin-slow': 'spin 24s linear infinite',
-        'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-glow': 'pulse-glow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
         'waveform': 'waveform 1.2s ease-in-out infinite',
       },
       keyframes: {
@@ -59,15 +57,14 @@ module.exports = {
           '50%': { opacity: '0.8', transform: 'scale(1.04)' },
         },
         'waveform': {
-          '0%, 100%': { height: '5px' },
-          '50%': { height: '20px' },
+          '0%, 100%': { height: '6px' },
+          '50%': { height: '22px' },
         },
       },
       boxShadow: {
-        'studio-sm': '0 2px 8px -2px rgba(0, 0, 0, 0.05)',
-        'studio-md': '0 12px 30px -10px rgba(0, 0, 0, 0.08)',
-        'studio-lg': '0 25px 60px -15px rgba(0, 0, 0, 0.12)',
-        'studio-float': '0 30px 70px -20px rgba(0, 0, 0, 0.16)',
+        'glow-cyan': '0 0 35px -5px rgba(0, 243, 255, 0.4)',
+        'glow-orange': '0 0 35px -5px rgba(255, 107, 0, 0.4)',
+        'phone-float': '0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px -10px rgba(0, 243, 255, 0.2)',
       },
     },
   },

@@ -10,9 +10,9 @@ interface Chapter {
 }
 
 const CHAPTERS: Chapter[] = [
-  { id: 'hero', label: 'Overview', num: '00' },
-  { id: 'journey', label: 'The Pack System', num: '01' },
-  { id: 'download', label: 'Download APK', num: '02' },
+  { id: 'hero', label: 'Overview', num: '01' },
+  { id: 'story', label: 'The Journey', num: '02' },
+  { id: 'download', label: 'Get MotoSync', num: '03' },
 ]
 
 export function ChapterNav() {
@@ -49,7 +49,7 @@ export function ChapterNav() {
   return (
     <nav
       aria-label="Chapter Navigation"
-      className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-end gap-3.5 pointer-events-auto"
+      className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-end gap-4 pointer-events-auto"
     >
       {CHAPTERS.map((ch) => {
         const isActive = activeChapter === ch.id
@@ -57,15 +57,15 @@ export function ChapterNav() {
           <button
             key={ch.id}
             onClick={() => scrollTo(ch.id)}
-            className="group flex items-center gap-2.5 py-1.5 focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 rounded-full"
+            className="group flex items-center gap-3 py-1.5 focus:outline-none rounded-full"
             aria-label={`Jump to ${ch.label}`}
           >
             {/* Label reveal on hover or active */}
             <span
               className={`text-[10px] font-display font-medium tracking-wider uppercase transition-all duration-300 ${
                 isActive
-                  ? 'text-neutral-950 opacity-100 translate-x-0'
-                  : 'text-neutral-400 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
+                  ? 'text-cyan-400 opacity-100 translate-x-0 font-bold'
+                  : 'text-textMuted opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
               }`}
             >
               {ch.num} {ch.label}
@@ -76,14 +76,14 @@ export function ChapterNav() {
               {isActive && (
                 <motion.span
                   layoutId="activeDotGlow"
-                  className="absolute inset-0 rounded-full bg-neutral-400/40 blur-[2px]"
+                  className="absolute inset-0 rounded-full bg-cyan-400/40 blur-[3px]"
                 />
               )}
               <span
                 className={`rounded-full transition-all duration-300 ${
                   isActive
-                    ? 'w-2.5 h-2.5 bg-neutral-950 shadow-[0_0_8px_rgba(0,0,0,0.3)]'
-                    : 'w-1.5 h-1.5 bg-neutral-300 group-hover:bg-neutral-500 group-hover:scale-125'
+                    ? 'w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_10px_rgba(0,243,255,0.8)]'
+                    : 'w-1.5 h-1.5 bg-white/20 group-hover:bg-white/60 group-hover:scale-125'
                 }`}
               />
             </div>
