@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST="{\"components\\\\HeroWheel3D.tsx -> ./R3FWheelScene\":{\"id\":\"components\\\\HeroWheel3D.tsx -> ./R3FWheelScene\",\"files\":[\"static/chunks/_app-pages-browser_components_R3FWheelScene_tsx.js\"]}}"

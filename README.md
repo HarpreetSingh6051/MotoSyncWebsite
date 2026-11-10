@@ -1,46 +1,32 @@
-# MotoSync — Official Public Website & Landing Platform
+# MotoSync Landing Platform
 
-> **Ride Together. Sync Your Pack.**
-> Next-generation digital platform engineered for motorcycle riding packs, road captains, and community fleets.
+Official public-facing promotional website and APK distribution portal for MotoSync (**Pack Connected. Ride in Sync**). Built with Next.js 14, React 18, Tailwind CSS, Framer Motion, and React Three Fiber.
 
----
+## Tech Stack & Architecture
+- **Framework**: Next.js 14 (App Router) + React 18 + TypeScript
+- **Styling**: Tailwind CSS + Custom Dark Theme Tokens
+- **3D & WebGL**: Three.js / React Three Fiber interactive motorcycle wheel with rim lighting & mouse tilt
+- **Motion**: Framer Motion scroll-driven rider journey (6 story scenes)
+- **APK Distribution**: Direct APK downloads, checksum validation, dynamic QR codes, and PWA launch links
 
-## ⚡ Tech Stack & Architecture
-
-- **Framework**: React 19 + Vite 6 + TypeScript
-- **Styling**: Tailwind CSS + Custom Cyberpunk Dark Tokens
-- **3D & WebGL**: Three.js WebGL Interactive Motorcycle Sport Rim with cursor physics & neon lighting
-- **Motion & Kinetic Typography**: Framer Motion 12 with staggered text reveals & 21st.dev-inspired spotlight hover cards
-- **Sound Engine**: Web Audio API Multi-Oscillator Exhaust Synthesizer (Harley-Davidson, Kawasaki Ninja, Royal Enfield Bullet, Ducati Panigale)
-- **Deployment**: Optimized for Vercel Edge Global CDN
-
----
-
-## 🚀 Quick Start
+## Local Development
 
 ```bash
 # 1. Install dependencies
 npm install
 
-# 2. Start local development server (port 3000)
+# 2. Start Next.js development server (port 3000)
 npm run dev
 
 # 3. Typecheck & production build
+npm run typecheck
 npm run build
 ```
 
----
-
-## 🌐 Connected Ecosystem Links
-
-| Platform | Production URL |
-| :--- | :--- |
-| **Android APK Direct Download** | [`https://moto-sync-ochre.vercel.app/motosync.apk`](https://moto-sync-ochre.vercel.app/motosync.apk) |
-| **MotoSync Rider Web App** | [`https://moto-sync-ochre.vercel.app`](https://moto-sync-ochre.vercel.app) |
-| **Super Admin ERP Command Center** | [`https://moto-sync-admin.vercel.app`](https://moto-sync-admin.vercel.app) |
-| **Backend REST API Gateway** | [`https://moto-sync-be.vercel.app/api/v1`](https://moto-sync-be.vercel.app/api/v1) |
-
----
-
-## 📄 License
-Proprietary © 2026 MotoSync Platform. All Rights Reserved.
+## Environment Variables
+Configure in `.env.local`:
+```env
+NEXT_PUBLIC_APK_URL=https://moto-sync-ochre.vercel.app/motosync.apk
+NEXT_PUBLIC_RIDER_URL=https://moto-sync-ochre.vercel.app
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000/api/v1
+```
