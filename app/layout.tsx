@@ -1,22 +1,23 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { AudioPlayer } from '@/components/AudioPlayer'
+import { SoundProvider } from '@/components/SoundContext'
+import { SmoothScrollProvider } from '@/components/SmoothScrollProvider'
 import { ScrollProgressBar } from '@/components/ScrollProgressBar'
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#04060C',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
 }
 
 export const metadata: Metadata = {
-  title: 'MotoSync – Ride Together. Sync Your Pack.',
-  description: 'One app for your motorcycle pack. Real-time live GPS radar, synchronized route stops, automatic bill splitting, and pack voice chat.',
+  title: 'MotoSync – Pack Connected. Ride in Sync.',
+  description: 'One app for your motorcycle pack. Live GPS radar, synchronized route stops, automatic bill splitting, and pack voice comms.',
   keywords: ['motorcycle app', 'riding group', 'pack ride', 'live motorcycle radar', 'bike rides', 'moto sync'],
   openGraph: {
-    title: 'MotoSync – Ride Together. Sync Your Pack.',
-    description: 'One app for your motorcycle pack. Real-time live GPS radar, synchronized route stops, automatic bill splitting, and pack voice chat.',
+    title: 'MotoSync – Pack Connected. Ride in Sync.',
+    description: 'One app for your motorcycle pack. Live GPS radar, synchronized route stops, automatic bill splitting, and pack voice comms.',
     url: 'https://motosync-landing.vercel.app',
     siteName: 'MotoSync',
     type: 'website',
@@ -37,14 +38,17 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className="bg-black text-white antialiased selection:bg-electric-500/30 selection:text-electric-300">
-        <ScrollProgressBar />
-        {children}
-        <AudioPlayer />
+      <body className="bg-midnight-950 text-text-support antialiased selection:bg-electric-500/30 selection:text-electric-300">
+        <SmoothScrollProvider>
+          <SoundProvider>
+            <ScrollProgressBar />
+            {children}
+          </SoundProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

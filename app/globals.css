@@ -4,67 +4,134 @@
 
 @layer base {
   * {
-    border-color: rgba(255, 255, 255, 0.08);
+    border-color: rgba(245, 247, 255, 0.08);
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #000000;
+    background-color: #04060C;
+    color-scheme: dark;
   }
 
   body {
-    background-color: #000000;
-    color: #f8fafc;
+    background-color: #04060C;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(16, 177, 251, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 60%, rgba(139, 92, 246, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 20% 90%, rgba(255, 106, 61, 0.04) 0%, transparent 40%),
+      linear-gradient(180deg, #04060C 0%, #070A14 25%, #0A1022 60%, #0E1530 100%);
+    background-attachment: fixed;
+    color: #A9B4CC;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
+    position: relative;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #F5F7FF;
+    font-family: 'Space Grotesk', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Tabular numbers across the board for telemetry and stats */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-/* Glassmorphism Cards with Thin Glowing Borders */
+/* Subtle Film Grain / Noise Overlay (3.5% opacity, non-interactive) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Vignette edge shading */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 50%, transparent 65%, rgba(4, 6, 12, 0.6) 100%);
+}
+
+/* Glassmorphism Cards with Thin Luminous Gradient Borders */
 .glass-card {
-  background: rgba(5, 7, 11, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9);
+  background: rgba(13, 19, 38, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(245, 247, 255, 0.09);
+  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.8);
 }
 
 .glass-card-blue {
-  background: rgba(6, 12, 22, 0.8);
+  background: rgba(10, 18, 38, 0.75);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(16, 177, 251, 0.28);
-  box-shadow: 0 0 35px -8px rgba(16, 177, 251, 0.25);
+  border: 1px solid rgba(16, 177, 251, 0.35);
+  box-shadow: 0 0 40px -10px rgba(16, 177, 251, 0.28);
 }
 
-.glass-card-purple {
-  background: rgba(12, 8, 22, 0.8);
+.glass-card-violet {
+  background: rgba(18, 12, 38, 0.75);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(139, 92, 246, 0.28);
-  box-shadow: 0 0 35px -8px rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.28);
 }
 
-/* Glowing text effects */
+.glass-card-ember {
+  background: rgba(28, 14, 18, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 106, 61, 0.35);
+  box-shadow: 0 0 40px -10px rgba(255, 106, 61, 0.25);
+}
+
+/* Luminous Glow text effects */
 .glow-blue {
-  text-shadow: 0 0 25px rgba(16, 177, 251, 0.75);
+  text-shadow: 0 0 30px rgba(16, 177, 251, 0.6);
 }
 
-.glow-purple {
-  text-shadow: 0 0 25px rgba(139, 92, 246, 0.75);
+.glow-violet {
+  text-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
 }
 
-/* Custom Scrollbar */
+.glow-ember {
+  text-shadow: 0 0 30px rgba(255, 106, 61, 0.6);
+}
+
+/* Precision Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #04060C;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 177, 251, 0.35);
+  background: rgba(16, 177, 251, 0.3);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(16, 177, 251, 0.8);
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
