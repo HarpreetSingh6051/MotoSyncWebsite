@@ -5,53 +5,25 @@ import { JourneyStoryPinned } from '@/components/JourneyStoryPinned'
 import { DownloadScene } from '@/components/DownloadScene'
 import { Footer } from '@/components/Footer'
 
-export default function HomePage({
-  searchParams,
-}: {
-  searchParams?: { preview_stage?: string }
-}) {
-  const p = searchParams?.preview_stage
-
-  // If a preview_stage is specified in query parameters (for QA frame-by-frame evidence)
-  if (p !== undefined) {
-    if (p === 'download') {
-      return (
-        <main className="relative min-h-screen bg-studio-50 text-slateText-body pt-20 overflow-x-hidden">
-          <Navbar />
-          <DownloadScene />
-        </main>
-      )
-    }
-    const num = parseInt(p, 10)
-    if (!isNaN(num) && num >= 0 && num <= 4) {
-      return (
-        <main className="relative min-h-screen bg-studio-50 text-slateText-body pt-20 overflow-x-hidden">
-          <Navbar />
-          <JourneyStoryPinned forceStage={num} />
-        </main>
-      )
-    }
-  }
-
-  // Full interactive landing page with smooth momentum scroll and pinned phone journey
+export default function HomePage() {
   return (
-    <main className="relative min-h-screen bg-studio-50 text-slateText-body selection:bg-neutral-900/10 selection:text-neutral-950 overflow-x-hidden">
+    <main className="relative min-h-screen bg-studio-50 text-slateText-body selection:bg-neutral-900 selection:text-white overflow-x-hidden">
       {/* Floating Pill Header Navigation with Sound Toggle */}
       <Navbar />
 
       {/* Right-side Vertical Chapter Dot Navigation */}
       <ChapterNav />
 
-      {/* SCENE 0: Hero Scene with Realistic 3D Wheel & Immediate Value */}
+      {/* SCENE 0: Hero Scene with Live Flagship App Dashboard */}
       <HeroScene />
 
-      {/* SCENES 1 - 5: SCROLL-DRIVEN PINNED PHONE JOURNEY */}
+      {/* SCENES 1 - 5: THE MOTOSYNC PACK SYSTEM (5-STAGE INTERACTIVE SHOWCASE) */}
       <JourneyStoryPinned />
 
-      {/* SCENE 6: Download MotoSync APK & PWA */}
+      {/* SCENE 6: Download MotoSync APK & Sideload Guide */}
       <DownloadScene />
 
-      {/* Minimal Footer */}
+      {/* Minimal Studio Footer */}
       <Footer />
     </main>
   )

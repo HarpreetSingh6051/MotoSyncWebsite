@@ -11,12 +11,8 @@ interface Chapter {
 
 const CHAPTERS: Chapter[] = [
   { id: 'hero', label: 'Overview', num: '00' },
-  { id: 'planning', label: 'Planning', num: '01' },
-  { id: 'rendezvous', label: 'Rendezvous', num: '02' },
-  { id: 'settlement', label: 'Settlement', num: '03' },
-  { id: 'community', label: 'Community', num: '04' },
-  { id: 'comms', label: 'Comms', num: '05' },
-  { id: 'download', label: 'Download', num: '06' },
+  { id: 'journey', label: 'The Pack System', num: '01' },
+  { id: 'download', label: 'Download APK', num: '02' },
 ]
 
 export function ChapterNav() {
@@ -53,7 +49,7 @@ export function ChapterNav() {
   return (
     <nav
       aria-label="Chapter Navigation"
-      className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-end gap-3 pointer-events-auto"
+      className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-end gap-3.5 pointer-events-auto"
     >
       {CHAPTERS.map((ch) => {
         const isActive = activeChapter === ch.id
@@ -61,7 +57,7 @@ export function ChapterNav() {
           <button
             key={ch.id}
             onClick={() => scrollTo(ch.id)}
-            className="group flex items-center gap-2.5 py-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 rounded-full"
+            className="group flex items-center gap-2.5 py-1.5 focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 rounded-full"
             aria-label={`Jump to ${ch.label}`}
           >
             {/* Label reveal on hover or active */}
