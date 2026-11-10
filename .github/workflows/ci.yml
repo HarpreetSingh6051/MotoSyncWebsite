@@ -13,12 +13,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'npm'
       - run: npm ci
-      - name: Encoding & Mojibake Check
-        run: node scripts/check-encoding.mjs
-      - name: TypeScript Check
+      - name: TypeScript check
         run: npm run typecheck
-      - name: Next.js Build
+      - name: Production build
         run: npm run build

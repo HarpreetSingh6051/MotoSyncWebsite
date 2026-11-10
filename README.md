@@ -1,32 +1,176 @@
-# MotoSync Landing Platform
+# MotoSync Landing
 
-Official public-facing promotional website and APK distribution portal for MotoSync (**Pack Connected. Ride in Sync**). Built with Next.js 14, React 18, Tailwind CSS, Framer Motion, and React Three Fiber.
+The public marketing site for **MotoSync** — a cinematic, scroll-driven product story built with **TanStack Start**, **React 19**, **Tailwind CSS v4**, and **Framer Motion**.
 
-## Tech Stack & Architecture
-- **Framework**: Next.js 14 (App Router) + React 18 + TypeScript
-- **Styling**: Tailwind CSS + Custom Dark Theme Tokens
-- **3D & WebGL**: Three.js / React Three Fiber interactive motorcycle wheel with rim lighting & mouse tilt
-- **Motion**: Framer Motion scroll-driven rider journey (6 story scenes)
-- **APK Distribution**: Direct APK downloads, checksum validation, dynamic QR codes, and PWA launch links
+> One app for the entire ride. Plan the route, track the pack live, split bills over UPI, and stay in the pack chat.
 
-## Local Development
+---
+
+## The story arc
+
+The page is a single long-form narrative made of seven self-contained scenes:
+
+| # | Scene | What it shows |
+| - | - | - |
+| 01 | The Call | Full-bleed highway hero, headline, download CTA, parallax background |
+| 02 | The Invite | Floating glass invite card with an interactive **Accept & Sync Route** state |
+| 03 | The Meetup | Live radar map with a glowing route, rotating sweep, and four riders converging on scroll |
+| 04 | The Ride | Intercom HUD with a live equalizer and hold-to-talk control |
+| 05 | The Settlement | Detailed bill-split card with an emerald **Settle ₹300 via UPI** success animation |
+| 06 | The Aftermath | Group chat with staggered messages, an interactive poll, and a working message composer |
+| 07 | The Finale | Final CTA, scannable QR code, and the "one app" summary |
+
+All backgrounds are real Unsplash photography with dark cinematic overlays. No white sections, no generic SaaS cards, no grey placeholders.
+
+---
+
+## Stack
+
+- **Framework:** TanStack Start 1.169 + TanStack Router 1.170
+- **UI:** React 19 + TypeScript 5.9
+- **Styling:** Tailwind CSS v4 (`@theme` design tokens, no `tailwind.config.js`)
+- **Motion:** Framer Motion 14 (`useScroll`, `useTransform`, `useSpring`)
+- **Icons:** Lucide React
+- **Server output:** Nitro (`node-server` preset locally, auto-detects Vercel)
+- **QR generation:** `qrcode` + `scripts/generate-qr.mjs`
+
+---
+
+## Local development
 
 ```bash
-# 1. Install dependencies
 npm install
-
-# 2. Start Next.js development server (port 3000)
 npm run dev
+```
 
-# 3. Typecheck & production build
+The dev server runs at **http://localhost:3000**.
+
+### Scripts
+
+| Command | Purpose |
+| - | - |
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Production build (client + SSR + Nitro output) |
+| `npm run start` | Run the built Node server from `.output/server/index.mjs` |
+| `npm run preview` | Preview the production build with Vite |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run qr` | Regenerate `src/lib/qr-matrix.ts` for the download QR code |
+
+### Production check
+
+```bash
 npm run typecheck
 npm run build
+npm run start
 ```
 
-## Environment Variables
-Configure in `.env.local`:
+`npm run start` serves the production build at **http://localhost:3000** by default. Set `PORT` to override.
+
+---
+
+## Environment variables
+
+Copy `.env.example` to `.env` if you need to point the CTAs at a different rider deployment:
+
 ```env
-NEXT_PUBLIC_APK_URL=https://moto-sync-ochre.vercel.app/motosync.apk
-NEXT_PUBLIC_RIDER_URL=https://moto-sync-ochre.vercel.app
-NEXT_PUBLIC_API_BASE_URL=http://localhost:4000/api/v1
+VITE_RIDER_URL=https://moto-sync.vercel.app
+VITE_APK_URL=https://moto-sync.vercel.app/motosync.apk
+VITE_SITE_URL=https://motosync-landing.vercel.app
 ```
+
+Only `VITE_`-prefixed values are exposed to the browser. Never put a Supabase `service_role` key or any other secret in this repo.
+
+The QR code is generated at build-time and committed as `src/lib/qr-matrix.ts`. If `VITE_RIDER_URL` changes, run `npm run qr` and commit the regenerated matrix.
+
+---
+
+## Design system
+
+Tokens live in `src/styles/globals.css` under `@theme`:
+
+| Token | Value | Use |
+| - | - | - |
+| `--color-void` | `#0a0b10` | Page background |
+| `--color-surface` | `#12141a` | Cards and surfaces |
+| `--color-radar` | `#00f3ff` | Live data, radar, active states |
+| `--color-ember` | `#ff6b00` | CTAs and ride energy |
+| `--color-settle` | `#10b981` | Payments and success |
+| `--color-ink` | `#f4f7fb` | Primary text |
+| `--color-mist` | `#9aa4b5` | Secondary text |
+| `--font-sans` | `Inter` | Body copy |
+| `--font-display` | `Space Grotesk` | Display headings |
+| `--ease-cinema` | `cubic-bezier(0.16, 1, 0.3, 1)` | Scroll and reveal easing |
+
+Glass surfaces use `rgba(18, 20, 26, 0.72)`, `backdrop-filter: blur(16px)`, and a `1px` white border at 8% opacity.
+
+---
+
+## Project structure
+
+```
+src/
+├── routes/
+│   ├── __root.tsx          # HTML shell, fonts, SEO meta, JSON-LD, 404
+│   └── index.tsx           # Composes the seven scenes
+├── components/
+│   ├── ui/                 # GlassCard, PillButton, SceneCopy, SceneBackdrop, Avatar...
+│   ├── widgets/            # InviteCard, RadarWidget, IntercomWidget, BillSplitWidget, ChatWidget, QrCode
+│   ├── scenes/             # HeroScene ... FinaleScene
+│   ├── Navbar.tsx
+│   ├── ChapterRail.tsx
+│   ├── ScrollProgress.tsx
+│   └── Footer.tsx
+├── lib/
+│   ├── content.ts          # Riders, images, chapters, bill items, chat messages
+│   ├── site.ts             # Public URLs and metadata
+│   ├── qr-matrix.ts        # Generated QR matrix
+│   └── cn.ts
+├── styles/globals.css      # Tailwind v4 import, tokens, glass, radar, keyframes
+├── router.tsx
+└── routeTree.gen.ts        # Generated by TanStack Router
+public/
+├── favicon.svg
+├── robots.txt
+└── sitemap.xml
+```
+
+---
+
+## Accessibility & motion
+
+- Every scene has a semantic section, heading, and readable alt text for portraits.
+- Interactive elements use real `<button>` / `<a>` elements with visible `:focus-visible` rings.
+- `prefers-reduced-motion` disables CSS keyframes and scroll-linked transforms. Framer Motion checks `useReducedMotion()` before applying parallax, convergence, and reveal animations.
+- The invite, bill split, poll, chat composer, and push-to-talk control are all keyboard operable.
+- Skip-to-content link is the first focusable element.
+
+---
+
+## Deployment
+
+### Vercel
+
+The repo includes `vercel.json` and Nitro auto-detects the Vercel preset. Import the repo into Vercel and keep:
+
+- **Build command:** `npm run build`
+- **Install command:** `npm install`
+- **Framework preset:** Other / no framework
+
+Set `VITE_RIDER_URL`, `VITE_APK_URL`, and `VITE_SITE_URL` in the Vercel project settings if they differ from the defaults.
+
+### Node / Docker
+
+```bash
+npm ci
+npm run build
+PORT=3000 node .output/server/index.mjs
+```
+
+---
+
+## Notes
+
+- The site works with **zero credentials**. There is no database or auth dependency.
+- All copy is original and avoids naming competing apps.
+- Images are loaded from Unsplash; keep the `images.unsplash.com` URLs intact.
+- The QR code is a real, scannable code generated from `VITE_RIDER_URL` (default: `https://moto-sync.vercel.app`).
