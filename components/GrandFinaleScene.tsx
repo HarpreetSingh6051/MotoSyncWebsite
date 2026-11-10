@@ -76,47 +76,25 @@ export function GrandFinaleScene() {
         
         {/* SCENE 7 HEADER */}
         <div className="text-center max-w-4xl mx-auto mb-16 sm:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-mono font-semibold text-orange-400 mb-6 tracking-wider shadow-[0_0_20px_rgba(255,107,0,0.2)]"
-          >
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-mono font-semibold text-orange-400 mb-6 tracking-wider shadow-[0_0_20px_rgba(255,107,0,0.2)]">
             <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping" />
             <span>07 // THE GRAND FINALE</span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-textHeading font-display tracking-tight leading-[1.05] mb-6"
-          >
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-textHeading font-display tracking-tight leading-[1.05] mb-6">
             Stop juggling apps.{' '}
             <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-cyan-400 bg-clip-text text-transparent glow-orange">
               Start riding together.
             </span>
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-lg sm:text-xl text-textSupport font-sans max-w-2xl mx-auto leading-relaxed"
-          >
+          <p className="text-lg sm:text-xl text-textSupport font-sans max-w-2xl mx-auto leading-relaxed">
             No more switching between WhatsApp, Google Maps, and Splitwise. MotoSync unifies your entire pack into one seamless operating system.
-          </motion.p>
+          </p>
         </div>
 
         {/* COMPARISON MATRIX: MotoSync vs The 3 Disconnected Apps */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 rounded-3xl border border-white/10 bg-surface/80 backdrop-blur-2xl p-6 sm:p-8 shadow-2xl overflow-hidden"
-        >
+        <div className="mb-16 rounded-3xl border border-white/10 bg-surface/80 backdrop-blur-2xl p-6 sm:p-8 shadow-2xl overflow-hidden">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-white/10 gap-4">
             <div>
               <h3 className="text-xl sm:text-2xl font-bold text-white font-display">
@@ -159,15 +137,10 @@ export function GrandFinaleScene() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* MAIN DOWNLOAD SHOWCASE CARD */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative rounded-3xl border border-white/15 bg-gradient-to-b from-[#16181f] to-[#0c0d12] p-8 sm:p-12 shadow-2xl overflow-hidden mb-16"
-        >
+        <div className="relative rounded-3xl border border-white/15 bg-gradient-to-b from-[#16181f] to-[#0c0d12] p-8 sm:p-12 shadow-2xl overflow-hidden mb-16">
           {/* Subtle Orange Glow Edge */}
           <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-orange-500/60 to-transparent" />
 
@@ -289,7 +262,7 @@ export function GrandFinaleScene() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* 3 INSTALLATION STEPS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
