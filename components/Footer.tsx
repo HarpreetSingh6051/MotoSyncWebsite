@@ -4,33 +4,33 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative border-t border-surface-border bg-midnight-950/90 py-12 px-4 sm:px-6 overflow-hidden">
+    <footer className="relative border-t border-neutral-200 bg-neutral-950 py-12 px-4 sm:px-6 overflow-hidden">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Brand & Status */}
         <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-electric-500 to-violet-500 flex items-center justify-center font-bold text-midnight-950 text-sm shadow-[0_0_15px_rgba(16,177,251,0.4)]">
+            <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center font-bold text-neutral-950 text-sm shadow-sm">
               M
             </div>
-            <span className="font-bold text-text-heading tracking-tight text-base font-display">
-              Moto<span className="text-electric-400">Sync</span>
+            <span className="font-bold text-white tracking-tight text-base font-display">
+              Moto<span className="text-neutral-400">Sync</span>
             </span>
           </div>
 
-          <div className="hidden sm:block w-px h-4 bg-surface-border" />
+          <div className="hidden sm:block w-px h-4 bg-neutral-700" />
 
           {/* Live System Indicator */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-success-500/10 border border-success-500/20 text-success-500 text-xs font-display">
-            <span className="w-2 h-2 rounded-full bg-success-500 animate-pulse" />
-            <span>Telemetry & Mesh Comms Active</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-display">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Systems Active</span>
           </div>
         </div>
 
         {/* Quick Rider Links */}
-        <div className="flex items-center gap-6 text-xs text-text-support font-display">
+        <div className="flex items-center gap-6 text-xs text-neutral-400 font-display">
           <a
             href="#journey"
-            className="hover:text-electric-400 transition-colors"
+            className="hover:text-white transition-colors"
           >
             Journey
           </a>
@@ -38,7 +38,7 @@ export function Footer() {
             href="https://moto-sync-ochre.vercel.app/motosync.apk"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-electric-400 transition-colors"
+            className="hover:text-white transition-colors"
           >
             Download APK
           </a>
@@ -46,14 +46,14 @@ export function Footer() {
             href="https://moto-sync-ochre.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-electric-400 transition-colors"
+            className="hover:text-white transition-colors"
           >
             Web App
           </a>
         </div>
 
         {/* Copyright */}
-        <div className="text-xs text-text-muted font-display text-center md:text-right">
+        <div className="text-xs text-neutral-500 font-display text-center md:text-right">
           <span>&copy; {currentYear} MotoSync. Pack Connected. Ride in Sync.</span>
         </div>
       </div>

@@ -24,7 +24,6 @@ export function ChapterNav() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY
       const windowHeight = window.innerHeight
 
       for (let i = CHAPTERS.length - 1; i >= 0; i--) {
@@ -62,15 +61,15 @@ export function ChapterNav() {
           <button
             key={ch.id}
             onClick={() => scrollTo(ch.id)}
-            className="group flex items-center gap-2.5 py-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-electric-400 rounded-full"
+            className="group flex items-center gap-2.5 py-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 rounded-full"
             aria-label={`Jump to ${ch.label}`}
           >
             {/* Label reveal on hover or active */}
             <span
               className={`text-[10px] font-display font-medium tracking-wider uppercase transition-all duration-300 ${
                 isActive
-                  ? 'text-electric-400 opacity-100 translate-x-0'
-                  : 'text-text-muted opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
+                  ? 'text-neutral-950 opacity-100 translate-x-0'
+                  : 'text-neutral-400 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
               }`}
             >
               {ch.num} {ch.label}
@@ -81,14 +80,14 @@ export function ChapterNav() {
               {isActive && (
                 <motion.span
                   layoutId="activeDotGlow"
-                  className="absolute inset-0 rounded-full bg-electric-500/40 blur-[2px]"
+                  className="absolute inset-0 rounded-full bg-neutral-400/40 blur-[2px]"
                 />
               )}
               <span
                 className={`rounded-full transition-all duration-300 ${
                   isActive
-                    ? 'w-2.5 h-2.5 bg-electric-400 shadow-[0_0_10px_#10B1FB]'
-                    : 'w-1.5 h-1.5 bg-white/20 group-hover:bg-white/60 group-hover:scale-125'
+                    ? 'w-2.5 h-2.5 bg-neutral-950 shadow-[0_0_8px_rgba(0,0,0,0.3)]'
+                    : 'w-1.5 h-1.5 bg-neutral-300 group-hover:bg-neutral-500 group-hover:scale-125'
                 }`}
               />
             </div>

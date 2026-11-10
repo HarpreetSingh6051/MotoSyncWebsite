@@ -124,21 +124,21 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
  */
 export function MiniEqualizer({ isPlaying }: { isPlaying: boolean }) {
   return (
-    <div className="flex items-end gap-[2px] h-3.5 w-3.5 px-0.5" aria-hidden="true">
+    <div className="flex items-end gap-[2.5px] h-3.5 w-3.5 px-0.5" aria-hidden="true">
       <span
-        className={`w-[2.5px] rounded-full bg-violet-400 transition-all duration-300 ${
+        className={`w-[2px] rounded-full bg-neutral-900 transition-all duration-300 ${
           isPlaying ? 'animate-waveform' : 'h-[3px] opacity-40'
         }`}
         style={{ animationDelay: '0ms' }}
       />
       <span
-        className={`w-[2.5px] rounded-full bg-electric-400 transition-all duration-300 ${
-          isPlaying ? 'animate-waveform' : 'h-[7px] opacity-40'
+        className={`w-[2px] rounded-full bg-neutral-900 transition-all duration-300 ${
+          isPlaying ? 'animate-waveform' : 'h-[8px] opacity-40'
         }`}
         style={{ animationDelay: '200ms' }}
       />
       <span
-        className={`w-[2.5px] rounded-full bg-violet-400 transition-all duration-300 ${
+        className={`w-[2px] rounded-full bg-neutral-900 transition-all duration-300 ${
           isPlaying ? 'animate-waveform' : 'h-[4px] opacity-40'
         }`}
         style={{ animationDelay: '400ms' }}

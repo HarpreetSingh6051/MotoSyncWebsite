@@ -16,7 +16,7 @@ export default function HomePage({
   if (p !== undefined) {
     if (p === 'download') {
       return (
-        <main className="relative min-h-screen bg-midnight-950 text-text-support pt-20 overflow-x-hidden">
+        <main className="relative min-h-screen bg-studio-50 text-slateText-body pt-20 overflow-x-hidden">
           <Navbar />
           <DownloadScene />
         </main>
@@ -25,7 +25,7 @@ export default function HomePage({
     const num = parseInt(p, 10)
     if (!isNaN(num) && num >= 0 && num <= 4) {
       return (
-        <main className="relative min-h-screen bg-midnight-950 text-text-support pt-20 overflow-x-hidden">
+        <main className="relative min-h-screen bg-studio-50 text-slateText-body pt-20 overflow-x-hidden">
           <Navbar />
           <JourneyStoryPinned forceStage={num} />
         </main>
@@ -35,7 +35,7 @@ export default function HomePage({
 
   // Full interactive landing page with smooth momentum scroll and pinned phone journey
   return (
-    <main className="relative min-h-screen bg-midnight-950 text-text-support selection:bg-electric-500/30 selection:text-electric-300 overflow-x-hidden">
+    <main className="relative min-h-screen bg-studio-50 text-slateText-body selection:bg-neutral-900/10 selection:text-neutral-950 overflow-x-hidden">
       {/* Floating Pill Header Navigation with Sound Toggle */}
       <Navbar />
 

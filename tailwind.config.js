@@ -9,47 +9,27 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        midnight: {
-          950: '#04060C',
-          900: '#070A14',
-          850: '#0A1022',
-          800: '#0E1530',
-          750: '#141C3B',
-          700: '#1B244A',
+        studio: {
+          50: '#FAFAFC',
+          100: '#F4F5F8',
+          150: '#ECEEF2',
+          200: '#E2E5EB',
+          300: '#D1D6E0',
+          400: '#9CA3AF',
+          500: '#6B7280',
+          600: '#4B5563',
+          700: '#374151',
+          800: '#1F2937',
+          900: '#111827',
+          950: '#090A0F',
         },
-        surface: {
-          950: '#04060C',
-          900: '#070A12',
-          card: '#0D1326',
-          border: 'rgba(245, 247, 255, 0.08)',
-          'border-bright': 'rgba(16, 177, 251, 0.3)',
-        },
-        text: {
-          heading: '#F5F7FF',
-          support: '#A9B4CC',
+        obsidian: '#090A0F',
+        charcoal: '#1A1C23',
+        slateText: {
+          heading: '#090A0F',
+          body: '#334155',
           muted: '#64748B',
-        },
-        electric: {
-          300: '#7DD3FC',
-          400: '#38BDF8',
-          500: '#10B1FB',
-          600: '#0284C7',
-        },
-        violet: {
-          400: '#A78BFA',
-          500: '#8B5CF6',
-          600: '#7C3AED',
-        },
-        ember: {
-          400: '#FF855D',
-          500: '#FF6A3D',
-          600: '#EA580C',
-        },
-        alert: {
-          500: '#EF4444',
-        },
-        success: {
-          500: '#10B981',
+          light: '#94A3B8',
         },
       },
       fontFamily: {
@@ -68,7 +48,6 @@ module.exports = {
         'spin-slow': 'spin 24s linear infinite',
         'pulse-glow': 'pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'waveform': 'waveform 1.2s ease-in-out infinite',
-        'ember-pulse': 'ember-pulse 2.5s ease-in-out infinite',
       },
       keyframes: {
         'radar-sweep': {
@@ -76,22 +55,19 @@ module.exports = {
           '100%': { transform: 'rotate(360deg)' },
         },
         'pulse-glow': {
-          '0%, 100%': { opacity: '0.35', transform: 'scale(1)' },
-          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+          '50%': { opacity: '0.8', transform: 'scale(1.04)' },
         },
         'waveform': {
-          '0%, 100%': { height: '6px' },
-          '50%': { height: '22px' },
-        },
-        'ember-pulse': {
-          '0%, 100%': { opacity: '0.3' },
-          '50%': { opacity: '0.7' },
+          '0%, 100%': { height: '5px' },
+          '50%': { height: '20px' },
         },
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'midnight-base': 'linear-gradient(180deg, #04060C 0%, #0A1022 50%, #0E1530 100%)',
-        'speed-lines': 'repeating-linear-gradient(90deg, rgba(16, 177, 251, 0.03) 0px, rgba(16, 177, 251, 0.03) 1px, transparent 1px, transparent 80px)',
+      boxShadow: {
+        'studio-sm': '0 2px 8px -2px rgba(0, 0, 0, 0.05)',
+        'studio-md': '0 12px 30px -10px rgba(0, 0, 0, 0.08)',
+        'studio-lg': '0 25px 60px -15px rgba(0, 0, 0, 0.12)',
+        'studio-float': '0 30px 70px -20px rgba(0, 0, 0, 0.16)',
       },
     },
   },

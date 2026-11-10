@@ -1,12 +1,9 @@
 'use client'
 
-import { useRef, useMemo, useEffect } from 'react'
+import { useRef, useMemo } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
-/**
- * Creates procedural high-frequency normal/bump map for tire tread blocks
- */
 function createTreadTexture() {
   const canvas = document.createElement('canvas')
   canvas.width = 512
@@ -17,7 +14,6 @@ function createTreadTexture() {
   ctx.fillStyle = '#808080'
   ctx.fillRect(0, 0, 512, 512)
 
-  // Draw tire sipes and directional tread blocks
   ctx.strokeStyle = '#202020'
   ctx.lineWidth = 14
   ctx.lineCap = 'round'
@@ -37,9 +33,6 @@ function createTreadTexture() {
   return texture
 }
 
-/**
- * Creates procedural drilled rotor alpha & bump map
- */
 function createRotorTexture() {
   const canvas = document.createElement('canvas')
   canvas.width = 512
@@ -50,7 +43,6 @@ function createRotorTexture() {
   ctx.fillStyle = '#CCCCCC'
   ctx.fillRect(0, 0, 512, 512)
 
-  // Radial brushed metal lines
   for (let r = 80; r < 240; r += 2) {
     ctx.beginPath()
     ctx.arc(256, 256, r, 0, Math.PI * 2)
@@ -59,7 +51,6 @@ function createRotorTexture() {
     ctx.stroke()
   }
 
-  // Drilled ventilation holes
   ctx.fillStyle = '#111111'
   for (let a = 0; a < Math.PI * 2; a += Math.PI / 16) {
     const r1 = 160
@@ -85,25 +76,21 @@ const WheelModel = () => {
   const caliperRef = useRef<THREE.Group>(null)
   const { pointer } = useThree()
 
-  // Generate procedural textures once in memory
   const treadMap = useMemo(() => (typeof window !== 'undefined' ? createTreadTexture() : null), [])
   const rotorMap = useMemo(() => (typeof window !== 'undefined' ? createRotorTexture() : null), [])
 
   useFrame((state, delta) => {
     if (!groupRef.current) return
 
-    // Scroll and continuous spin
     groupRef.current.rotation.z -= delta * 0.9
 
-    // Smooth mouse parallax lerping (limits within subtle angles)
     const targetX = -pointer.y * 0.35 + 0.1
     const targetY = pointer.x * 0.35 - 0.2
 
     groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetX, 0.08)
     groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetY, 0.08)
 
-    // Gentle hover float
-    const floatY = Math.sin(state.clock.elapsedTime * 1.4) * 0.06
+    const floatY = Math.sin(state.clock.elapsedTime * 1.4) * 0.05
     groupRef.current.position.y = floatY
 
     if (caliperRef.current) {
@@ -113,43 +100,38 @@ const WheelModel = () => {
     }
   })
 
-  // 10 Radial Turbine Spokes
   const spokes = useMemo(() => Array.from({ length: 10 }), [])
 
   return (
     <>
       <group ref={groupRef}>
-        {/* 1. Heavy Rubber Tire Outer Ring with PBR Tread Bump */}
+        {/* 1. Heavy Rubber Tire Outer Ring */}
         <mesh>
           <torusGeometry args={[2.32, 0.52, 32, 72]} />
           <meshStandardMaterial
-            color="#080B10"
-            roughness={0.92}
-            metalness={0.06}
+            color="#1C2028"
+            roughness={0.94}
+            metalness={0.04}
             bumpMap={treadMap || undefined}
             bumpScale={0.04}
           />
         </mesh>
 
-        {/* 2. Electric Blue Anodized Rim Bead Stripe */}
+        {/* 2. Brushed Titanium Rim Stripe */}
         <mesh position={[0, 0, 0.2]}>
           <torusGeometry args={[1.84, 0.03, 16, 64]} />
           <meshStandardMaterial
-            color="#10B1FB"
-            emissive="#0284C7"
-            emissiveIntensity={0.6}
-            roughness={0.2}
-            metalness={0.9}
+            color="#CBD5E1"
+            roughness={0.18}
+            metalness={0.94}
           />
         </mesh>
         <mesh position={[0, 0, -0.2]}>
           <torusGeometry args={[1.84, 0.03, 16, 64]} />
           <meshStandardMaterial
-            color="#10B1FB"
-            emissive="#0284C7"
-            emissiveIntensity={0.6}
-            roughness={0.2}
-            metalness={0.9}
+            color="#CBD5E1"
+            roughness={0.18}
+            metalness={0.94}
           />
         </mesh>
 
@@ -157,9 +139,9 @@ const WheelModel = () => {
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[1.82, 1.82, 0.44, 48, 1, true]} />
           <meshStandardMaterial
-            color="#111622"
+            color="#475569"
             metalness={0.92}
-            roughness={0.24}
+            roughness={0.22}
             side={THREE.DoubleSide}
           />
         </mesh>
@@ -168,21 +150,19 @@ const WheelModel = () => {
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.62, 0.62, 0.46, 36]} />
           <meshStandardMaterial
-            color="#18202E"
+            color="#334155"
             metalness={0.94}
             roughness={0.2}
           />
         </mesh>
 
-        {/* 5. Titanium Hollow Axle Spindle */}
+        {/* 5. Titanium Axle Spindle */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <cylinderGeometry args={[0.26, 0.26, 0.5, 6]} />
           <meshStandardMaterial
-            color="#38BDF8"
-            emissive="#0284C7"
-            emissiveIntensity={0.5}
+            color="#E2E8F0"
             metalness={0.98}
-            roughness={0.12}
+            roughness={0.1}
           />
         </mesh>
 
@@ -198,22 +178,22 @@ const WheelModel = () => {
               <mesh>
                 <boxGeometry args={[0.1, 1.35, 0.09]} />
                 <meshStandardMaterial
-                  color="#1A2333"
+                  color="#64748B"
                   metalness={0.88}
-                  roughness={0.28}
+                  roughness={0.24}
                 />
               </mesh>
             </group>
           )
         })}
 
-        {/* 7. Drilled Ventilated Disc Rotor */}
+        {/* 7. Drilled Ventilated Stainless Disc Rotor */}
         <mesh position={[0, 0, 0.24]}>
           <ringGeometry args={[0.76, 1.52, 64]} />
           <meshStandardMaterial
-            color="#8A98AB"
+            color="#CBD5E1"
             metalness={0.96}
-            roughness={0.18}
+            roughness={0.16}
             bumpMap={rotorMap || undefined}
             bumpScale={0.03}
             side={THREE.DoubleSide}
@@ -221,26 +201,21 @@ const WheelModel = () => {
         </mesh>
       </group>
 
-      {/* 8. Stationary Dark Anodized Racing Caliper (Clean MotoSync Hardware) */}
+      {/* 8. Stationary Satin Black Racing Caliper */}
       <group ref={caliperRef}>
         <mesh position={[1.22, 0.76, 0.32]} rotation={[0, 0, -Math.PI / 5.2]}>
           <boxGeometry args={[0.46, 0.94, 0.36]} />
           <meshStandardMaterial
-            color="#121722"
-            emissive="#0C101A"
-            emissiveIntensity={0.2}
+            color="#181C24"
             metalness={0.82}
-            roughness={0.32}
+            roughness={0.28}
           />
         </mesh>
-        {/* Subtle Anodized Accent Trim */}
         <mesh position={[1.22, 0.76, 0.44]} rotation={[0, 0, -Math.PI / 5.2]}>
           <boxGeometry args={[0.4, 0.12, 0.04]} />
           <meshStandardMaterial
-            color="#10B1FB"
-            emissive="#10B1FB"
-            emissiveIntensity={0.7}
-            metalness={0.9}
+            color="#E2E8F0"
+            metalness={0.95}
             roughness={0.1}
           />
         </mesh>
@@ -256,17 +231,16 @@ export function R3FWheelScene() {
         camera={{ position: [0, 0, 6.6], fov: 46 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
-        {/* Deep Midnight Ambient Base */}
-        <ambientLight intensity={0.65} color="#0E1530" />
+        <ambientLight intensity={1.3} color="#FFFFFF" />
 
-        {/* Top-Left Electric Blue Key Rim Light */}
-        <pointLight position={[-4, 3, 4.5]} color="#10B1FB" intensity={12} distance={16} />
+        {/* Top-Left Crisp Studio Softbox Key Light */}
+        <pointLight position={[-4, 3, 4.5]} color="#FFFFFF" intensity={12} distance={16} />
 
-        {/* Bottom-Right Warm Ember Pavement Reflection Light */}
-        <pointLight position={[3.5, -2.8, 3.8]} color="#FF6A3D" intensity={9} distance={14} />
+        {/* Bottom-Right Neutral Studio Fill Light */}
+        <pointLight position={[3.5, -2.8, 3.8]} color="#E2E8F0" intensity={8} distance={14} />
 
-        {/* Backlight / Violet Specular Halo */}
-        <pointLight position={[0, -3.5, -2]} color="#8B5CF6" intensity={5} distance={10} />
+        {/* Studio Rim Backlight */}
+        <pointLight position={[0, 3.5, -2]} color="#FFFFFF" intensity={6} distance={10} />
 
         <WheelModel />
       </Canvas>
