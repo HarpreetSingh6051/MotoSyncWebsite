@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import {
   Users,
   Radio,
@@ -15,19 +15,7 @@ import {
   LayoutGrid,
   Zap,
   RotateCw,
-  Compass,
 } from "lucide-react";
-
-import {
-  VectorPackSquad,
-  VectorVoiceLounge,
-  VectorMountainRide,
-  VectorAiNavigator,
-  VectorPackRadar,
-  VectorFuelSplit,
-  VectorClubBadge,
-  VectorSafetyPing,
-} from "./VectorRiderArtwork";
 
 import { LubanMicroCanvas } from "./LubanMicroCanvas";
 
@@ -37,7 +25,6 @@ export interface FeatureItem {
   copy: string;
   tag: string;
   icon: typeof Users;
-  artwork: typeof VectorPackSquad;
   accent: string;
   hasLuban3D?: "radar" | "ai-core";
 }
@@ -49,7 +36,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "60Hz shared location view, rider delta formation, and live telemetry.",
     tag: "60Hz Radar · Luban 3D",
     icon: Navigation,
-    artwork: VectorPackRadar,
     accent: "var(--ms-lime, #d6f66f)",
     hasLuban3D: "radar",
   },
@@ -59,7 +45,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Local crews, touring clubs, and riders who share your kind of road.",
     tag: "Community Vision",
     icon: Users,
-    artwork: VectorPackSquad,
     accent: "var(--ms-coral, #ff8a68)",
   },
   {
@@ -68,7 +53,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Hang out before the ride. Talk through the route. Keep everyone connected.",
     tag: "Intercom 24/7",
     icon: Radio,
-    artwork: VectorVoiceLounge,
     accent: "var(--ms-cyan, #7de0e2)",
   },
   {
@@ -77,7 +61,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Meetup points, invitations, waypoints, and a route everyone can ride.",
     tag: "Waypoint Route",
     icon: Route,
-    artwork: VectorMountainRide,
     accent: "var(--ms-coral, #ff8a68)",
   },
   {
@@ -86,7 +69,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Describe time, terrain, and riding style. Get a personalized itinerary.",
     tag: "AI Copilot · Luban 3D",
     icon: Sparkles,
-    artwork: VectorAiNavigator,
     accent: "var(--ms-cyan, #7de0e2)",
     hasLuban3D: "ai-core",
   },
@@ -96,7 +78,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Fuel, food, and stays. Settle who paid and who owes in one tap.",
     tag: "Instant Splitwise",
     icon: Wallet,
-    artwork: VectorFuelSplit,
     accent: "var(--ms-lime, #d6f66f)",
   },
   {
@@ -105,7 +86,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Custom club badges, crests, ride announcements, and rally banners.",
     tag: "Club Badges",
     icon: Shield,
-    artwork: VectorClubBadge,
     accent: "var(--ms-coral, #ff8a68)",
   },
   {
@@ -114,7 +94,6 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Gravel, potholes, and weather pings pinned and synced across the pack.",
     tag: "Safety HUD",
     icon: MapPin,
-    artwork: VectorSafetyPing,
     accent: "var(--ms-lime, #d6f66f)",
   },
 ];
@@ -144,14 +123,14 @@ export function Feature3DWall() {
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
 
-  // Auto orbit with smooth timing
+  // Auto orbit
   useEffect(() => {
     if (!autoOrbit || isDragging) return;
     const timer = setInterval(nextSlide, 4200);
     return () => clearInterval(timer);
   }, [autoOrbit, isDragging, nextSlide]);
 
-  // Wheel / Trackpad horizontal swipe support
+  // Wheel / Trackpad horizontal swipe
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -174,7 +153,7 @@ export function Feature3DWall() {
     return () => el.removeEventListener("wheel", handleWheel);
   }, [viewMode, nextSlide, prevSlide]);
 
-  // Pointer drag handling with velocity calculation
+  // Pointer drag
   const handlePointerDown = (e: React.PointerEvent) => {
     if (viewMode === "grid") return;
     setIsDragging(true);
@@ -198,7 +177,6 @@ export function Feature3DWall() {
     if (!isDragging) return;
     setIsDragging(false);
 
-    // Apply momentum threshold
     const velocity = dragVelocityRef.current;
     if (dragOffset > 50 || velocity > 0.4) {
       prevSlide();
@@ -222,12 +200,12 @@ export function Feature3DWall() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  // Interactive mouse tilt with smooth specular coordinates
+  // Interactive mouse tilt
   const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMouseTilt({ x: x * 16, y: -y * 16 });
+    setMouseTilt({ x: x * 14, y: -y * 14 });
   };
 
   const handleCardMouseLeave = () => {
@@ -246,7 +224,7 @@ export function Feature3DWall() {
             YAW {((activeIndex / total) * 360).toFixed(0)}°
           </span>
           <span className="ms-telemetry-sep">·</span>
-          <span className="ms-telemetry-stat">REACT BITS & MOTION SITES</span>
+          <span className="ms-telemetry-stat">SMOOTH MOTION</span>
         </div>
 
         {/* View Mode Switcher */}
@@ -255,7 +233,7 @@ export function Feature3DWall() {
             type="button"
             className={`ms-mode-btn ${viewMode === "curved" ? "is-active" : ""}`}
             onClick={() => setViewMode("curved")}
-            title="Magnific & React Bits 3D Curved Cylinder Wall"
+            title="3D Curved Cylinder Wall"
           >
             <Eye size={14} />
             <span>3D Cylinder</span>
@@ -264,7 +242,7 @@ export function Feature3DWall() {
             type="button"
             className={`ms-mode-btn ${viewMode === "tilt" ? "is-active" : ""}`}
             onClick={() => setViewMode("tilt")}
-            title="MotionSites 3D Isometric Tilt Flow"
+            title="3D Isometric Tilt Flow"
           >
             <Layers size={14} />
             <span>Tilt Flow</span>
@@ -313,7 +291,7 @@ export function Feature3DWall() {
 
       {/* 2. 3D Wall Carousel Stage */}
       {viewMode === "grid" ? (
-        /* Flat Grid View for quick reading */
+        /* Flat Grid View: Clean cards same as previous */
         <div className="ms-3d-grid-view">
           {FEATURE_LIST.map((item, idx) => (
             <article
@@ -321,27 +299,30 @@ export function Feature3DWall() {
               className={`ms-grid-card ${idx === activeIndex ? "is-focused" : ""}`}
               onClick={() => setActiveIndex(idx)}
             >
-              <div className="ms-grid-card-art">
-                <item.artwork className="w-full h-auto rounded-t-xl" />
-                {item.hasLuban3D && (
-                  <div className="ms-grid-luban-overlay">
-                    <LubanMicroCanvas variant={item.hasLuban3D} className="w-16 h-16" />
-                  </div>
-                )}
-              </div>
-              <div className="ms-grid-card-content">
-                <div className="ms-grid-card-tag" style={{ color: item.accent }}>
-                  <item.icon size={13} />
-                  <span>{item.tag}</span>
+              <div className="ms-card-top-row">
+                <div className="ms-card-icon-box" style={{ color: item.accent }}>
+                  <item.icon size={26} />
                 </div>
-                <h3>{item.title}</h3>
-                <p>{item.copy}</p>
+                <div className="ms-card-badges">
+                  {item.hasLuban3D && (
+                    <span className="ms-luban-chip">
+                      <Zap size={11} className="text-[var(--ms-lime,#d6f66f)]" />
+                      LUBAN 3D
+                    </span>
+                  )}
+                  <span className="ms-card-num-badge">0{idx + 1}</span>
+                </div>
               </div>
+              <span className="ms-card-tag" style={{ color: item.accent }}>
+                {item.tag}
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.copy}</p>
             </article>
           ))}
         </div>
       ) : (
-        /* 3D Curved Cylinder Wall or MotionSites Tilt Flow */
+        /* 3D Curved Cylinder Wall or Tilt Flow */
         <div
           ref={containerRef}
           className={`ms-3d-stage ${viewMode === "curved" ? "is-curved-mode" : "is-tilt-mode"} ${
@@ -368,21 +349,20 @@ export function Feature3DWall() {
 
               if (!isVisible) return null;
 
-              // Pure Mathematical 3D Polar Cylinder Math (React Bits & MotionSites formulation)
+              // Pure Mathematical 3D Polar Cylinder Math
               let transform = "";
               let opacity = 1;
               let zIndex = 60 - absOffset * 10;
               let filter = "none";
 
               if (viewMode === "curved") {
-                // True Cylindrical Geometry
-                const cylinderRadius = 620; // Virtual cylinder radius
+                const cylinderRadius = 580;
                 const angleDeg = offset * 25 + dragOffset * 0.08;
                 const angleRad = (angleDeg * Math.PI) / 180;
 
                 const transX = Math.sin(angleRad) * cylinderRadius;
-                const transZ = (Math.cos(angleRad) - 1) * cylinderRadius + (isCurrent ? 75 : -absOffset * 25);
-                const scale = Math.max(0.76, 1 - absOffset * 0.07);
+                const transZ = (Math.cos(angleRad) - 1) * cylinderRadius + (isCurrent ? 60 : -absOffset * 20);
+                const scale = Math.max(0.78, 1 - absOffset * 0.06);
 
                 transform = `translateX(${transX.toFixed(1)}px) translateZ(${transZ.toFixed(1)}px) rotateY(${angleDeg.toFixed(1)}deg) scale(${scale.toFixed(2)})`;
 
@@ -390,16 +370,16 @@ export function Feature3DWall() {
                   transform += ` rotateX(${mouseTilt.y.toFixed(1)}deg) rotateY(${mouseTilt.x.toFixed(1)}deg)`;
                 }
 
-                opacity = Math.max(0.25, 1 - absOffset * 0.22);
+                opacity = Math.max(0.28, 1 - absOffset * 0.2);
                 if (absOffset >= 2) {
-                  filter = `blur(${Math.min(4, absOffset * 1.5)}px)`;
+                  filter = `blur(${Math.min(3, absOffset * 1.2)}px)`;
                 }
               } else {
-                // MotionSites 3D Isometric Cascade
-                const transX = offset * 265 + dragOffset;
-                const transZ = -absOffset * 95;
-                const rotY = offset > 0 ? -34 : offset < 0 ? 34 : 0;
-                const scale = Math.max(0.8, 1 - absOffset * 0.08);
+                // Tilt Flow
+                const transX = offset * 260 + dragOffset;
+                const transZ = -absOffset * 90;
+                const rotY = offset > 0 ? -32 : offset < 0 ? 32 : 0;
+                const scale = Math.max(0.82, 1 - absOffset * 0.07);
 
                 transform = `translateX(${transX}px) translateZ(${transZ}px) rotateY(${rotY}deg) scale(${scale})`;
                 opacity = Math.max(0.3, 1 - absOffset * 0.2);
@@ -427,54 +407,36 @@ export function Feature3DWall() {
                   {/* React Bits StarBorder Glow on Active Card */}
                   {isCurrent && <div className="ms-star-border-aura" />}
 
-                  {/* Card Artwork Header */}
-                  <div className="ms-card-artwork-frame">
-                    <item.artwork className="ms-card-artwork-svg" />
-
-                    {/* Integrated Luban 3D Micro Viewport in designated cards */}
-                    {item.hasLuban3D && (
-                      <div className="ms-card-luban-viewport">
-                        <LubanMicroCanvas
-                          variant={item.hasLuban3D}
-                          className="w-full h-full"
-                          isActive={isCurrent}
-                        />
-                        <span className="ms-card-luban-label">
-                          <Zap size={11} className="text-[var(--ms-lime,#d6f66f)]" />
-                          LUBAN 3D
-                        </span>
+                  {/* Clean Card Inner - Same as previous, no big image */}
+                  <div className="ms-card-clean-inner">
+                    <div className="ms-card-top-row">
+                      <div className="ms-card-icon-box" style={{ color: item.accent }}>
+                        <item.icon size={26} />
                       </div>
-                    )}
-
-                    {/* Top Tag & Index Badge */}
-                    <div className="ms-card-top-bar">
-                      <span className="ms-card-tag-pill" style={{ borderColor: item.accent }}>
-                        <item.icon size={12} style={{ color: item.accent }} />
-                        <span>{item.tag}</span>
-                      </span>
-                      <span className="ms-card-num-badge">
-                        0{idx + 1}
-                      </span>
+                      <div className="ms-card-badges">
+                        {item.hasLuban3D && (
+                          <div className="ms-card-luban-inline">
+                            <span className="ms-luban-chip">
+                              <Zap size={10} className="text-[var(--ms-lime,#d6f66f)]" />
+                              LUBAN 3D
+                            </span>
+                            <div className="ms-micro-view-dot">
+                              <LubanMicroCanvas variant={item.hasLuban3D} className="w-8 h-8" />
+                            </div>
+                          </div>
+                        )}
+                        <span className="ms-card-num-badge">0{idx + 1}</span>
+                      </div>
                     </div>
 
-                    {/* React Bits Dynamic Specular Sheen */}
-                    <div
-                      className="ms-card-specular-sheen"
-                      style={{
-                        background: isCurrent
-                          ? `radial-gradient(550px circle at ${50 + mouseTilt.x * 2}% ${
-                              50 + mouseTilt.y * 2
-                            }%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 60%)`
-                          : "none",
-                      }}
-                    />
-                  </div>
+                    <span className="ms-card-tag" style={{ color: item.accent }}>
+                      {item.tag}
+                    </span>
 
-                  {/* Card Content Footer */}
-                  <div className="ms-card-body">
                     <h3 className={`ms-card-title ${isCurrent ? "ms-shiny-title" : ""}`}>
                       {item.title}
                     </h3>
+
                     <p className="ms-card-copy">{item.copy}</p>
 
                     <div className="ms-card-footer-action">
@@ -483,6 +445,18 @@ export function Feature3DWall() {
                       </span>
                       <span className="ms-card-accent-line" style={{ background: item.accent }} />
                     </div>
+
+                    {/* Specular glass reflection on active card */}
+                    <div
+                      className="ms-card-specular-sheen"
+                      style={{
+                        background: isCurrent
+                          ? `radial-gradient(400px circle at ${50 + mouseTilt.x * 2}% ${
+                              50 + mouseTilt.y * 2
+                            }%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 60%)`
+                          : "none",
+                      }}
+                    />
                   </div>
                 </div>
               );
@@ -490,29 +464,6 @@ export function Feature3DWall() {
           </div>
         </div>
       )}
-
-      {/* 3. Bottom Progress Bar & Dot Pointers */}
-      <div className="ms-3d-footer-bar">
-        <span className="ms-3d-counter">
-          <b>0{activeIndex + 1}</b> / 0{total}
-        </span>
-        <div className="ms-3d-dots" role="tablist" aria-label="Feature pagination">
-          {FEATURE_LIST.map((f, i) => (
-            <button
-              key={f.id}
-              type="button"
-              className={`ms-3d-dot ${i === activeIndex ? "is-active" : ""}`}
-              onClick={() => setActiveIndex(i)}
-              aria-label={`Go to slide ${i + 1}: ${f.title}`}
-            >
-              <span className="ms-3d-dot-inner" />
-            </button>
-          ))}
-        </div>
-        <div className="ms-3d-hint hidden md:flex items-center gap-1.5 text-xs text-[var(--ms-muted,#93a7b0)]">
-          <span>← Drag, use arrow keys, or trackpad swipe to rotate in 3D →</span>
-        </div>
-      </div>
     </div>
   );
 }
