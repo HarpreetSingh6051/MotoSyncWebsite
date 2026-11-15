@@ -1,11 +1,11 @@
-import { QR_MATRIX, QR_QUIET_ZONE, QR_SIZE } from '@/lib/qr-matrix'
+import { QR_MATRIX, QR_QUIET_ZONE, QR_SIZE, QR_URL } from '@/lib/qr-matrix'
 import { site } from '@/lib/site'
 
 const viewBoxSize = QR_SIZE + QR_QUIET_ZONE * 2
 
 export function QrCode() {
   return (
-    <div className="w-full max-w-[15rem]">
+    <a href={QR_URL} className="block w-full max-w-[15rem]" aria-label="Open MotoSync rider app">
       <div className="relative rounded-[1.4rem] border border-black/10 bg-white p-3 shadow-md">
         <span
           aria-hidden
@@ -27,11 +27,11 @@ export function QrCode() {
         <svg
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
           role="img"
-          aria-label="QR code to download MotoSync"
+          aria-label="QR code to open MotoSync"
           shapeRendering="crispEdges"
           className="h-auto w-full"
         >
-          <title>Scan to download MotoSync</title>
+          <title>Scan to open MotoSync</title>
           <rect width={viewBoxSize} height={viewBoxSize} fill="#ffffff" />
           {QR_MATRIX.map((row, y) =>
             row.map((on, x) =>
@@ -50,8 +50,8 @@ export function QrCode() {
         </svg>
       </div>
       <p className="mt-3 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-dim">
-        Scan to install · {site.name}
+        Scan to open · {site.name}
       </p>
-    </div>
+    </a>
   )
 }

@@ -1,3 +1,4 @@
+import { useReducedMotion } from "framer-motion";
 import { useState, useRef, useEffect, useCallback } from "react";
 import {
   Users,
@@ -33,8 +34,8 @@ const FEATURE_LIST: FeatureItem[] = [
   {
     id: "radar",
     title: "Keep the pack in sight",
-    copy: "60Hz shared location view, rider delta formation, and live telemetry.",
-    tag: "60Hz Radar · Luban 3D",
+    copy: "A shared view of the ride, designed to help your group stay together.",
+    tag: "Location sharing",
     icon: Navigation,
     accent: "var(--ms-lime, #d6f66f)",
     hasLuban3D: "radar",
@@ -51,7 +52,7 @@ const FEATURE_LIST: FeatureItem[] = [
     id: "voice",
     title: "Drop into the voice lounge",
     copy: "Hang out before the ride. Talk through the route. Keep everyone connected.",
-    tag: "Intercom 24/7",
+    tag: "Voice lounge",
     icon: Radio,
     accent: "var(--ms-cyan, #7de0e2)",
   },
@@ -67,7 +68,7 @@ const FEATURE_LIST: FeatureItem[] = [
     id: "ai",
     title: "AI co-rider for planning",
     copy: "Describe time, terrain, and riding style. Get a personalized itinerary.",
-    tag: "AI Copilot · Luban 3D",
+    tag: "AI planning / Concept",
     icon: Sparkles,
     accent: "var(--ms-cyan, #7de0e2)",
     hasLuban3D: "ai-core",
@@ -75,8 +76,8 @@ const FEATURE_LIST: FeatureItem[] = [
   {
     id: "split",
     title: "Keep shared expenses simple",
-    copy: "Fuel, food, and stays. Settle who paid and who owes in one tap.",
-    tag: "Instant Splitwise",
+    copy: "Fuel, food, and stays. Keep track of who paid and who owes.",
+    tag: "Shared expenses",
     icon: Wallet,
     accent: "var(--ms-lime, #d6f66f)",
   },
@@ -101,6 +102,7 @@ const FEATURE_LIST: FeatureItem[] = [
 type ViewMode = "curved" | "tilt" | "grid";
 
 export function Feature3DWall() {
+  const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [viewMode, setViewMode] = useState<ViewMode>("curved");
   const [dragOffset, setDragOffset] = useState(0);
@@ -111,6 +113,7 @@ export function Feature3DWall() {
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartRef = useRef<{ x: number; y: number } | null>(null);
   const isHorizontalDragRef = useRef<boolean>(false);
+  const suppressClickRef = useRef(false);
   const lastDragTimeRef = useRef<number>(0);
   const dragVelocityRef = useRef<number>(0);
 
@@ -126,10 +129,15 @@ export function Feature3DWall() {
 
   // Auto orbit
   useEffect(() => {
-    if (!autoOrbit || isDragging) return;
-    const timer = setInterval(nextSlide, 4200);
+    if (!autoOrbit || isDragging || reducedMotion || viewMode === "grid") return;
+    const timer = setInterval(() => {
+ const el = containerRef.current;
+ if (!el || document.hidden || el.closest(".ms-3d-wall-wrapper")?.contains(document.activeElement) || el.matches(":hover")) return;
+ const rect = el.getBoundingClientRect();
+ if (rect.bottom > 0 && rect.top < window.innerHeight) nextSlide();
+}, 4200);
     return () => clearInterval(timer);
-  }, [autoOrbit, isDragging, nextSlide]);
+  }, [autoOrbit, isDragging, nextSlide, reducedMotion, viewMode]);
 
   // Wheel / Trackpad horizontal swipe
   useEffect(() => {
@@ -156,7 +164,9 @@ export function Feature3DWall() {
 
   // Pointer drag - intelligent horizontal/vertical axis discrimination
   const handlePointerDown = (e: React.PointerEvent) => {
-    if (viewMode === "grid") return;
+    if (viewMode === "grid" || e.button !== 0) return;
+    setAutoOrbit(false);
+    suppressClickRef.current = false;
     dragStartRef.current = { x: e.clientX, y: e.clientY };
     isHorizontalDragRef.current = false;
     lastDragTimeRef.current = Date.now();
@@ -174,8 +184,9 @@ export function Feature3DWall() {
         // Confirmed horizontal intent: engage drag and capture pointer
         isHorizontalDragRef.current = true;
         setIsDragging(true);
+        suppressClickRef.current = true;
         try {
-          (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+          (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
         } catch {}
       } else if (Math.abs(dy) > 10) {
         // Vertical scroll intent: release and let page scroll smoothly
@@ -194,7 +205,7 @@ export function Feature3DWall() {
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
-    if (isHorizontalDragRef.current) {
+    if (isHorizontalDragRef.current && e.type !== "pointercancel") {
       const velocity = dragVelocityRef.current;
       if (dragOffset > 45 || velocity > 0.35) {
         prevSlide();
@@ -202,7 +213,7 @@ export function Feature3DWall() {
         nextSlide();
       }
       try {
-        (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+        (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
       } catch {}
     }
 
@@ -212,18 +223,11 @@ export function Feature3DWall() {
     dragStartRef.current = null;
   };
 
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prevSlide();
-      if (e.key === "ArrowRight") nextSlide();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [nextSlide, prevSlide]);
+
 
   // Interactive mouse tilt
   const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reducedMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -236,25 +240,29 @@ export function Feature3DWall() {
 
   return (
     <div className="ms-3d-wall-wrapper">
+      <p className="sr-only" aria-live={autoOrbit ? "off" : "polite"} aria-atomic="true">
+        Feature {activeIndex + 1} of {total}: {FEATURE_LIST[activeIndex].title}
+      </p>
       {/* 1. Header Toolbar with Mode Toggles & Luban 3D Telemetry HUD */}
       <div className="ms-3d-toolbar">
         <div className="ms-3d-telemetry-badge">
           <span className="ms-telemetry-pulse" />
-          <span className="ms-telemetry-label">LUBAN 3D CYLINDER</span>
+          <span className="ms-telemetry-label">EXPLORE THE POSSIBILITIES</span>
           <span className="ms-telemetry-sep">·</span>
           <span className="ms-telemetry-yaw">
-            YAW {((activeIndex / total) * 360).toFixed(0)}°
+            {String(activeIndex + 1).padStart(2, "0")} / {total}
           </span>
           <span className="ms-telemetry-sep">·</span>
-          <span className="ms-telemetry-stat">SMOOTH MOTION</span>
+          <span className="ms-telemetry-stat">DEMO</span>
         </div>
 
         {/* View Mode Switcher */}
-        <div className="ms-3d-modes" role="tablist" aria-label="3D Carousel Modes">
+        <div className="ms-3d-modes" role="group" aria-label="Feature display">
           <button
             type="button"
             className={`ms-mode-btn ${viewMode === "curved" ? "is-active" : ""}`}
-            onClick={() => setViewMode("curved")}
+            aria-pressed={viewMode === "curved"}
+ onClick={() => setViewMode("curved")}
             title="3D Curved Cylinder Wall"
           >
             <Eye size={14} />
@@ -263,7 +271,8 @@ export function Feature3DWall() {
           <button
             type="button"
             className={`ms-mode-btn ${viewMode === "tilt" ? "is-active" : ""}`}
-            onClick={() => setViewMode("tilt")}
+            aria-pressed={viewMode === "tilt"}
+ onClick={() => setViewMode("tilt")}
             title="3D Isometric Tilt Flow"
           >
             <Layers size={14} />
@@ -272,7 +281,8 @@ export function Feature3DWall() {
           <button
             type="button"
             className={`ms-mode-btn ${viewMode === "grid" ? "is-active" : ""}`}
-            onClick={() => setViewMode("grid")}
+            aria-pressed={viewMode === "grid"}
+ onClick={() => setViewMode("grid")}
             title="Flat Overview Grid"
           >
             <LayoutGrid size={14} />
@@ -287,7 +297,9 @@ export function Feature3DWall() {
             className={`ms-ctrl-btn ${autoOrbit ? "is-active" : ""}`}
             onClick={() => setAutoOrbit(!autoOrbit)}
             title={autoOrbit ? "Pause auto-orbit" : "Start auto-orbit"}
-            aria-label="Toggle auto-orbit"
+            aria-label="Toggle automatic rotation"
+ aria-pressed={autoOrbit}
+ disabled={!!reducedMotion || viewMode === "grid"}
           >
             <RotateCw size={14} className={autoOrbit ? "animate-spin" : ""} />
             <span className="hidden sm:inline">{autoOrbit ? "Orbiting" : "Auto"}</span>
@@ -319,7 +331,7 @@ export function Feature3DWall() {
             <article
               key={item.id}
               className={`ms-grid-card ${idx === activeIndex ? "is-focused" : ""}`}
-              onClick={() => setActiveIndex(idx)}
+
             >
               <div className="ms-card-top-row">
                 <div className="ms-card-icon-box" style={{ color: item.accent }}>
@@ -329,7 +341,7 @@ export function Feature3DWall() {
                   {item.hasLuban3D && (
                     <span className="ms-luban-chip">
                       <Zap size={11} className="text-[var(--ms-lime,#d6f66f)]" />
-                      LUBAN 3D
+                      CONCEPT
                     </span>
                   )}
                   <span className="ms-card-num-badge">0{idx + 1}</span>
@@ -347,6 +359,13 @@ export function Feature3DWall() {
         /* 3D Curved Cylinder Wall or Tilt Flow */
         <div
           ref={containerRef}
+ tabIndex={0} role="region" aria-roledescription="carousel"
+ aria-label="Product vision. Use left and right arrows to browse features."
+ onKeyDown={(event) => {
+ if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+ event.preventDefault(); setAutoOrbit(false);
+ if (event.key === "ArrowLeft") prevSlide(); else nextSlide();
+ }}
           className={`ms-3d-stage ${viewMode === "curved" ? "is-curved-mode" : "is-tilt-mode"} ${
             isDragging ? "is-grabbing" : ""
           }`}
@@ -388,7 +407,7 @@ export function Feature3DWall() {
 
                 transform = `translateX(${transX.toFixed(1)}px) translateZ(${transZ.toFixed(1)}px) rotateY(${angleDeg.toFixed(1)}deg) scale(${scale.toFixed(2)})`;
 
-                if (isCurrent && !isDragging) {
+                if (isCurrent && !isDragging && !reducedMotion) {
                   transform += ` rotateX(${mouseTilt.y.toFixed(1)}deg) rotateY(${mouseTilt.x.toFixed(1)}deg)`;
                 }
 
@@ -410,18 +429,19 @@ export function Feature3DWall() {
               return (
                 <div
                   key={item.id}
+                  aria-hidden={!isCurrent}
                   className={`ms-3d-card ${isCurrent ? "is-active" : "is-neighbor"}`}
                   style={{
                     transform,
                     opacity,
                     zIndex,
                     filter,
-                    transition: isDragging
+                    transition: isDragging || reducedMotion
                       ? "none"
                       : "transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease",
                   }}
                   onClick={() => {
-                    if (offset !== 0) setActiveIndex(idx);
+                    if (offset !== 0 && !suppressClickRef.current) setActiveIndex(idx);
                   }}
                   onMouseMove={isCurrent ? handleCardMouseMove : undefined}
                   onMouseLeave={isCurrent ? handleCardMouseLeave : undefined}
@@ -440,10 +460,10 @@ export function Feature3DWall() {
                           <div className="ms-card-luban-inline">
                             <span className="ms-luban-chip">
                               <Zap size={10} className="text-[var(--ms-lime,#d6f66f)]" />
-                              LUBAN 3D
+                              CONCEPT
                             </span>
                             <div className="ms-micro-view-dot">
-                              <LubanMicroCanvas variant={item.hasLuban3D} className="w-8 h-8" />
+                              {isCurrent && !reducedMotion && <LubanMicroCanvas variant={item.hasLuban3D} className="w-8 h-8" />}
                             </div>
                           </div>
                         )}
@@ -463,7 +483,7 @@ export function Feature3DWall() {
 
                     <div className="ms-card-footer-action">
                       <span className="ms-card-action-text" style={{ color: item.accent }}>
-                        Explore feature ↗
+                        Product vision / Demo
                       </span>
                       <span className="ms-card-accent-line" style={{ background: item.accent }} />
                     </div>

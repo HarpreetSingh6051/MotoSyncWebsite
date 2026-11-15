@@ -4,7 +4,7 @@ import { CommunityHelmet } from "./CommunityHelmet";
 import { CommunityFeatures } from "./CommunityFeatures";
 import { MotoSyncLogo } from "./MotoSyncLogo";
 import { ImpressiveFooter } from "./ImpressiveFooter";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import {
   ArrowUpRight,
@@ -28,13 +28,18 @@ import { site } from "@/lib/site";
 
 export function LandingExperience() {
   const [menu, setMenu] = useState(false);
+ const menuButton = useRef<HTMLButtonElement>(null);
   return (
     <div className="motosync-site">
       <Atmosphere />
       <a className="ms-skip" href="#main">
         Skip to content
       </a>
-      <header className="ms-nav-header">
+      <header className="ms-nav-header" onKeyDown={(event) => {
+ if (event.key === "Escape" && menu) { setMenu(false); menuButton.current?.focus(); }
+ }} onBlur={(event) => {
+ if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setMenu(false);
+ }}>
         <div className="ms-nav">
           <a href="#" className="ms-brand" aria-label="MotoSync home">
             <MotoSyncLogo size={32} showWordmark={true} />
@@ -60,7 +65,9 @@ export function LandingExperience() {
             Explore the app <ArrowUpRight size={16} />
           </a>
           <button
-            className="ms-menu"
+            ref={menuButton}
+ type="button"
+ className="ms-menu"
             aria-label={menu ? "Close menu" : "Open menu"}
             aria-expanded={menu}
             aria-controls="main-links"
@@ -70,7 +77,7 @@ export function LandingExperience() {
           </button>
         </div>
       </header>
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <section className="ms-hero">
           <div className="ms-hero-copy">
             <div className="ms-eyebrow">
@@ -98,19 +105,19 @@ export function LandingExperience() {
             <div className="ms-hero-chips">
               <span className="ms-chip">
                 <Zap size={13} className="text-[var(--ms-lime,#d6f66f)]" />
-                <span>60Hz Live Radar</span>
+                <span>Plan your rides</span>
               </span>
               <span className="ms-chip">
                 <Mic size={13} className="text-[var(--ms-cyan,#7de0e2)]" />
-                <span>Drop-in Intercom</span>
+                <span>Keep talking</span>
               </span>
               <span className="ms-chip">
                 <Receipt size={13} className="text-[var(--ms-coral,#ff8a68)]" />
-                <span>Instant Splitwise</span>
+                <span>Share the journey</span>
               </span>
               <span className="ms-chip">
                 <Shield size={13} className="text-[var(--ms-lime,#d6f66f)]" />
-                <span>Private & Ad-Free</span>
+                <span>Find your people</span>
               </span>
             </div>
             <div className="ms-hero-foot">

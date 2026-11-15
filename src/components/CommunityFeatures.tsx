@@ -7,7 +7,7 @@ export function CommunityFeatures() {
       <section className="ms-section community-features" id="features">
         <div className="ms-section-heading">
           <div>
-            <span className="ms-eyebrow">THE PACK IN MOTION · 3D FEATURE CYLINDER</span>
+            <span className="ms-eyebrow">YOUR RIDING WORLD, CONNECTED</span>
             <h2>
               Everything around
               <br />
@@ -15,8 +15,7 @@ export function CommunityFeatures() {
             </h2>
           </div>
           <p>
-            Meet your people. Make plans. Stay in the conversation. Drag or
-            swipe across our 3D interactive cylinder designed with authentic rider telemetry.
+            Meet your people. Make plans. Stay in the conversation. Explore our product vision below: interactive demos, with availability evolving as we build.
           </p>
         </div>
 

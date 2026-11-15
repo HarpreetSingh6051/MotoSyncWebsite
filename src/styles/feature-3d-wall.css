@@ -438,3 +438,23 @@
     animation: none !important;
   }
 }
+
+/* Interaction polish: readable content and an unobstructed sticky navigation. */
+.motosync-site [id] { scroll-margin-top: 110px; }
+.ms-nav-header { will-change: auto; }
+.ms-footer-qr-card.spotlight-card { padding: clamp(24px, 5vw, 64px); }
+.ms-footer-qr-card::before { pointer-events: none; }
+.ms-3d-stage:focus-visible { outline: 2px solid var(--ms-lime); outline-offset: 6px; }
+.ms-ctrl-btn:disabled { opacity: .4; cursor: default; }
+.ms-3d-wall-wrapper .ms-card-footer-action { cursor: default; }
+.ms-3d-wall-wrapper .ms-shiny-title { animation: none; background: none; -webkit-text-fill-color: currentColor; }
+@media (max-width: 600px) {
+  .ms-3d-toolbar { gap: 14px; }
+  .ms-3d-telemetry-badge { flex-wrap: wrap; font-size: 9px; }
+  .ms-3d-nav-ctrls { align-self: flex-end; }
+  .ms-3d-card { max-width: 72vw; }
+  .ms-footer-qr-card.spotlight-card { padding: 24px 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms-star-border-aura, .spotlight-card__light, .spotlight-card__edge { display: none; }
+}

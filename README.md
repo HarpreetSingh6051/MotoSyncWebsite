@@ -74,7 +74,7 @@ Copy `.env.example` to `.env` if you need to point the CTAs at a different rider
 
 ```env
 VITE_RIDER_URL=https://moto-sync.vercel.app
-VITE_APK_URL=https://moto-sync.vercel.app/motosync.apk
+VITE_APK_URL=
 VITE_SITE_URL=https://motosync-landing.vercel.app
 ```
 
@@ -174,3 +174,9 @@ PORT=3000 node .output/server/index.mjs
 - All copy is original and avoids naming competing apps.
 - Images are loaded from Unsplash; keep the `images.unsplash.com` URLs intact.
 - The QR code is a real, scannable code generated from `VITE_RIDER_URL` (default: `https://moto-sync.vercel.app`).
+
+## Latest interaction and integration review
+
+See [docs/WEBSITE_REVIEW.md](docs/WEBSITE_REVIEW.md) for the review, Antigravity skill locations, and outstanding release checks. React Bits source and license are checked into the component folder. MotionSites needs authentication in Antigravity; Unsloth is a future backend capability.
+
+`npm run dev` and `npm run build` regenerate the QR using development and production Vite environments respectively. Leave `VITE_APK_URL` blank until an Android release is verified. Run `npm test` for QR configuration regressions and `npm run test:smoke` after a build for a production HTTP check. Browser/device QA is still required.

@@ -23,19 +23,24 @@ export function LubanMicroCanvas({
   }, []);
 
   useEffect(() => {
-    if (!mounted || !containerRef.current) return;
+    if (!mounted || !isActive || !containerRef.current) return;
     let disposed = false;
-    let animId: number;
+    let animId = 0;
+ let cleanup: (() => void) | undefined;
 
     import("three").then((T) => {
       if (disposed || !containerRef.current) return;
       const el = containerRef.current;
+      let visible = false;
+      const visibility = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
+      visibility.observe(el);
 
       // Renderer
       let renderer: InstanceType<typeof T.WebGLRenderer>;
       try {
         renderer = new T.WebGLRenderer({ alpha: true, antialias: true });
       } catch {
+        visibility.disconnect();
         return;
       }
 
@@ -108,6 +113,7 @@ export function LubanMicroCanvas({
         let sweepAngle = 0;
         const animate = () => {
           if (disposed) return;
+          if (!visible || document.hidden) { animId = requestAnimationFrame(animate); return; }
           sweepAngle -= 0.045;
           sweep.rotation.z = sweepAngle;
           group.rotation.x = 0.35;
@@ -145,6 +151,7 @@ export function LubanMicroCanvas({
 
         const animate = () => {
           if (disposed) return;
+          if (!visible || document.hidden) { animId = requestAnimationFrame(animate); return; }
           ico.rotation.x += 0.012;
           ico.rotation.y += 0.018;
           core.rotation.x -= 0.02;
@@ -167,19 +174,28 @@ export function LubanMicroCanvas({
       });
       resizeObserver.observe(el);
 
-      return () => {
+      cleanup = () => {
         disposed = true;
         cancelAnimationFrame(animId);
         resizeObserver.disconnect();
-        renderer.dispose();
+        visibility.disconnect();
+        scene.traverse((object) => {
+ if (object instanceof T.Mesh) {
+ object.geometry.dispose();
+ const materials = Array.isArray(object.material) ? object.material : [object.material];
+ materials.forEach((material) => material.dispose());
+ }
+ });
+ renderer.dispose(); renderer.domElement.remove();
       };
-    });
+    }).catch(() => { /* Keep the fallback icon if WebGL is unavailable. */ });
 
     return () => {
       disposed = true;
       cancelAnimationFrame(animId);
+      cleanup?.();
     };
-  }, [mounted, variant]);
+  }, [mounted, variant, isActive]);
 
   return (
     <div
