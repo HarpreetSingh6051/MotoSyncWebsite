@@ -352,7 +352,7 @@
   background: var(--ms-night);
   color: var(--ms-white);
   font-family: Inter, sans-serif;
-  overflow: clip;
+  overflow-x: clip;
 }
 .motosync-site h1,
 .motosync-site h2,
@@ -382,17 +382,25 @@
 .ms-skip:focus {
   top: 10px;
 }
+.ms-nav-header {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  width: 100%;
+  background: rgba(16, 30, 37, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ms-line);
+}
 .ms-nav {
-  height: 100px;
+  height: 90px;
   max-width: 1440px;
-  margin: auto;
+  margin: 0 auto;
   padding: 0 5%;
   display: flex;
   align-items: center;
   gap: 35px;
-  border-bottom: 1px solid var(--ms-line);
   position: relative;
-  z-index: 30;
 }
 .ms-brand {
   display: flex;
@@ -1029,6 +1037,8 @@
     right: 0;
     background: var(--ms-panel);
     padding: 24px;
+    border-bottom: 1px solid var(--ms-line);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   }
   .ms-links.is-open {
     display: flex;

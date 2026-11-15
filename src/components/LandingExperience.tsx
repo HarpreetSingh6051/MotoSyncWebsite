@@ -28,42 +28,44 @@ export function LandingExperience() {
       <a className="ms-skip" href="#main">
         Skip to content
       </a>
-      <header className="ms-nav">
-        <a href="#" className="ms-brand" aria-label="MotoSync home">
-          <span className="ms-brand-mark">
-            <Route size={23} />
-          </span>
-          MOTOSYNC<span className="ms-brand-dot">®</span>
-        </a>
-        <nav
-          className={menu ? "ms-links is-open" : "ms-links"}
-          id="main-links"
-          aria-label="Main navigation"
-        >
-          {[
-            ["Experience", "#experience"],
-            ["Features", "#features"],
-            ["Community", "#community"],
-            ["Plans", "#plans"],
-            ["Questions", "#questions"],
-          ].map(([label, href]) => (
-            <a key={href} href={href} onClick={() => setMenu(false)}>
-              {label}
-            </a>
-          ))}
-        </nav>
-        <a className="ms-button ms-nav-cta" href={site.riderUrl}>
-          Explore the app <ArrowUpRight size={16} />
-        </a>
-        <button
-          className="ms-menu"
-          aria-label={menu ? "Close menu" : "Open menu"}
-          aria-expanded={menu}
-          aria-controls="main-links"
-          onClick={() => setMenu(!menu)}
-        >
-          {menu ? <X /> : <Menu />}
-        </button>
+      <header className="ms-nav-header">
+        <div className="ms-nav">
+          <a href="#" className="ms-brand" aria-label="MotoSync home">
+            <span className="ms-brand-mark">
+              <Route size={23} />
+            </span>
+            MOTOSYNC<span className="ms-brand-dot">®</span>
+          </a>
+          <nav
+            className={menu ? "ms-links is-open" : "ms-links"}
+            id="main-links"
+            aria-label="Main navigation"
+          >
+            {[
+              ["Experience", "#experience"],
+              ["Features", "#features"],
+              ["Community", "#community"],
+              ["Plans", "#plans"],
+              ["Questions", "#questions"],
+            ].map(([label, href]) => (
+              <a key={href} href={href} onClick={() => setMenu(false)}>
+                {label}
+              </a>
+            ))}
+          </nav>
+          <a className="ms-button ms-nav-cta" href={site.riderUrl}>
+            Explore the app <ArrowUpRight size={16} />
+          </a>
+          <button
+            className="ms-menu"
+            aria-label={menu ? "Close menu" : "Open menu"}
+            aria-expanded={menu}
+            aria-controls="main-links"
+            onClick={() => setMenu(!menu)}
+          >
+            {menu ? <X /> : <Menu />}
+          </button>
+        </div>
       </header>
       <main id="main">
         <section className="ms-hero">
