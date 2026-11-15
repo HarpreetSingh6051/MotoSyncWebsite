@@ -2,6 +2,8 @@ import { PossibilityVision } from "./ProductVision";
 import { Atmosphere } from "./Atmosphere";
 import { CommunityHelmet } from "./CommunityHelmet";
 import { CommunityFeatures } from "./CommunityFeatures";
+import { MotoSyncLogo } from "./MotoSyncLogo";
+import { ImpressiveFooter } from "./ImpressiveFooter";
 import { useState } from "react";
 
 import {
@@ -15,6 +17,10 @@ import {
   X,
   Mountain,
   Coffee,
+  Zap,
+  Mic,
+  Receipt,
+  Shield,
 } from "lucide-react";
 
 import { offers, questions } from "@/lib/marketing";
@@ -31,10 +37,7 @@ export function LandingExperience() {
       <header className="ms-nav-header">
         <div className="ms-nav">
           <a href="#" className="ms-brand" aria-label="MotoSync home">
-            <span className="ms-brand-mark">
-              <Route size={23} />
-            </span>
-            MOTOSYNC<span className="ms-brand-dot">®</span>
+            <MotoSyncLogo size={32} showWordmark={true} />
           </a>
           <nav
             className={menu ? "ms-links is-open" : "ms-links"}
@@ -91,6 +94,24 @@ export function LandingExperience() {
               <a className="ms-text-link" href="#experience">
                 Explore the vision <ArrowRight size={17} />
               </a>
+            </div>
+            <div className="ms-hero-chips">
+              <span className="ms-chip">
+                <Zap size={13} className="text-[var(--ms-lime,#d6f66f)]" />
+                <span>60Hz Live Radar</span>
+              </span>
+              <span className="ms-chip">
+                <Mic size={13} className="text-[var(--ms-cyan,#7de0e2)]" />
+                <span>Drop-in Intercom</span>
+              </span>
+              <span className="ms-chip">
+                <Receipt size={13} className="text-[var(--ms-coral,#ff8a68)]" />
+                <span>Instant Splitwise</span>
+              </span>
+              <span className="ms-chip">
+                <Shield size={13} className="text-[var(--ms-lime,#d6f66f)]" />
+                <span>Private & Ad-Free</span>
+              </span>
             </div>
             <div className="ms-hero-foot">
               <span>PLAN. RIDE. CONNECT.</span>
@@ -248,16 +269,7 @@ export function LandingExperience() {
           </span>
         </section>
       </main>
-      <footer className="ms-footer">
-        <a className="ms-brand" href="#">
-          MOTOSYNC
-        </a>
-        <span>Pack connected. Ride in sync.</span>
-        <a href={`mailto:${site.contactEmail}`}>
-          Say hello <ArrowUpRight size={14} />
-        </a>
-        <span>© {new Date().getFullYear()} MotoSync</span>
-      </footer>
+      <ImpressiveFooter />
     </div>
   );
 }
