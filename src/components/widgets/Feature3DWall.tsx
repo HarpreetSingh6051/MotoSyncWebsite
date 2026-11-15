@@ -19,15 +19,15 @@ import {
 } from "lucide-react";
 
 import {
-  CartoonPackSquad,
-  CartoonVoiceLounge,
-  CartoonMountainRide,
-  CartoonAiNavigator,
-  CartoonPackRadar,
-  CartoonFuelSplit,
-  CartoonClubBadge,
-  CartoonSafetyPing,
-} from "./CartoonArtwork";
+  VectorPackSquad,
+  VectorVoiceLounge,
+  VectorMountainRide,
+  VectorAiNavigator,
+  VectorPackRadar,
+  VectorFuelSplit,
+  VectorClubBadge,
+  VectorSafetyPing,
+} from "./VectorRiderArtwork";
 
 import { LubanMicroCanvas } from "./LubanMicroCanvas";
 
@@ -37,7 +37,7 @@ export interface FeatureItem {
   copy: string;
   tag: string;
   icon: typeof Users;
-  artwork: typeof CartoonPackSquad;
+  artwork: typeof VectorPackSquad;
   accent: string;
   hasLuban3D?: "radar" | "ai-core";
 }
@@ -49,7 +49,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "60Hz shared location view, rider delta formation, and live telemetry.",
     tag: "60Hz Radar · Luban 3D",
     icon: Navigation,
-    artwork: CartoonPackRadar,
+    artwork: VectorPackRadar,
     accent: "var(--ms-lime, #d6f66f)",
     hasLuban3D: "radar",
   },
@@ -59,7 +59,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Local crews, touring clubs, and riders who share your kind of road.",
     tag: "Community Vision",
     icon: Users,
-    artwork: CartoonPackSquad,
+    artwork: VectorPackSquad,
     accent: "var(--ms-coral, #ff8a68)",
   },
   {
@@ -68,7 +68,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Hang out before the ride. Talk through the route. Keep everyone connected.",
     tag: "Intercom 24/7",
     icon: Radio,
-    artwork: CartoonVoiceLounge,
+    artwork: VectorVoiceLounge,
     accent: "var(--ms-cyan, #7de0e2)",
   },
   {
@@ -77,7 +77,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Meetup points, invitations, waypoints, and a route everyone can ride.",
     tag: "Waypoint Route",
     icon: Route,
-    artwork: CartoonMountainRide,
+    artwork: VectorMountainRide,
     accent: "var(--ms-coral, #ff8a68)",
   },
   {
@@ -86,7 +86,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Describe time, terrain, and riding style. Get a personalized itinerary.",
     tag: "AI Copilot · Luban 3D",
     icon: Sparkles,
-    artwork: CartoonAiNavigator,
+    artwork: VectorAiNavigator,
     accent: "var(--ms-cyan, #7de0e2)",
     hasLuban3D: "ai-core",
   },
@@ -96,7 +96,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Fuel, food, and stays. Settle who paid and who owes in one tap.",
     tag: "Instant Splitwise",
     icon: Wallet,
-    artwork: CartoonFuelSplit,
+    artwork: VectorFuelSplit,
     accent: "var(--ms-lime, #d6f66f)",
   },
   {
@@ -105,7 +105,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Custom club badges, crests, ride announcements, and rally banners.",
     tag: "Club Badges",
     icon: Shield,
-    artwork: CartoonClubBadge,
+    artwork: VectorClubBadge,
     accent: "var(--ms-coral, #ff8a68)",
   },
   {
@@ -114,7 +114,7 @@ const FEATURE_LIST: FeatureItem[] = [
     copy: "Gravel, potholes, and weather pings pinned and synced across the pack.",
     tag: "Safety HUD",
     icon: MapPin,
-    artwork: CartoonSafetyPing,
+    artwork: VectorSafetyPing,
     accent: "var(--ms-lime, #d6f66f)",
   },
 ];

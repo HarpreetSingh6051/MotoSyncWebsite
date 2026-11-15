@@ -7,7 +7,7 @@ export function CommunityFeatures() {
       <section className="ms-section community-features" id="features">
         <div className="ms-section-heading">
           <div>
-            <span className="ms-eyebrow">LUBAN 3D FEATURE LAB · THE PACK ECOSYSTEM</span>
+            <span className="ms-eyebrow">THE PACK IN MOTION · 3D FEATURE CYLINDER</span>
             <h2>
               Everything around
               <br />
@@ -16,7 +16,7 @@ export function CommunityFeatures() {
           </div>
           <p>
             Meet your people. Make plans. Stay in the conversation. Drag or
-            swipe across our 3D interactive wall designed with Luban 3D depth telemetry.
+            swipe across our 3D interactive cylinder designed with authentic rider telemetry.
           </p>
         </div>
 
