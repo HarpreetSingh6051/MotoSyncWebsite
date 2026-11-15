@@ -7,12 +7,12 @@ interface LogoProps extends SVGProps<SVGSVGElement> {
 }
 
 /**
- * MotoSync Bespoke Brand Mark — The Apex Winglet
+ * MotoSync Brand Identity — The Pack Radar HUD
  * 
- * An iconic high-velocity monogram engineered at the intersection of:
- * 1. Motorcycle Racing Aerodynamics: Dual superbike winglets canted at a dynamic 22° rake angle.
- * 2. Pack Echelon Formation: Two synchronized riders leaning together through a high-speed apex.
- * 3. Live Telemetry Mesh: Integrated coral-flame apex focal beacon connecting the pack in real-time.
+ * An action-and-purpose-driven brand emblem reflecting what MotoSync actually does:
+ * 1. 360° Pack Radar: Range ring tracking pack members within real-time mesh distance.
+ * 2. Forward Heading Delta: The aerodynamic motorcycle carving forward on the route.
+ * 3. Live Telemetry Sync: Connected crew member pings orbiting together in real-time synchronicity.
  */
 export function MotoSyncLogo({
   size = 32,
@@ -32,39 +32,58 @@ export function MotoSyncLogo({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="motosync-logo-mark transition-transform duration-300 hover:scale-105"
-        aria-label="MotoSync Icon"
+        aria-label="MotoSync Pack Radar"
         {...props}
       >
         <defs>
-          {/* Main neon velocity gradient */}
-          <linearGradient id="msApexGrad" x1="8" y1="12" x2="56" y2="52" gradientUnits="userSpaceOnUse">
+          {/* High-voltage heading delta gradient */}
+          <linearGradient id="msRadarGrad" x1="12" y1="10" x2="52" y2="52" gradientUnits="userSpaceOnUse">
             <stop stopColor="#7de0e2" />
-            <stop offset="0.5" stopColor="#9bf3aa" />
+            <stop offset="0.6" stopColor="#9bf3aa" />
             <stop offset="1" stopColor="#d6f66f" />
           </linearGradient>
 
           {/* Depth glow filter */}
-          <filter id="msApexGlow" x="-25%" y="-25%" width="150%" height="150%">
+          <filter id="msRadarGlow" x="-25%" y="-25%" width="150%" height="150%">
             <feDropShadow dx="0" dy="2" stdDeviation="5" floodColor="#7de0e2" floodOpacity="0.45" />
           </filter>
         </defs>
 
-        {/* 
-          The Apex Winglet Monogram
-          - Left Blade: Ascending motorcycle rake angle (Lead Rider)
-          - Center Dive: High-speed apex lean
-          - Right Blade: Ascending second crest (Wingman / Pack Sync)
-          - Chamfered base: Aerodynamic winglet cutouts
-        */}
-        <path
-          d="M 12 47 L 22.5 14.5 C 23.2 12.5 25.2 11.2 27.5 11.5 L 30 12 C 32 12.5 33.2 14.2 33.8 16 L 37.5 27 L 41.2 16 C 41.8 14.2 43 12.5 45 12 L 47.5 11.5 C 49.8 11.2 51.8 12.5 52.5 14.5 L 63 47 L 54 47 L 47 25 L 42.5 37 C 41.8 39 39.8 40.2 37.8 40 L 36.2 40 C 34.2 40.2 32.2 39 31.5 37 L 27 25 L 20 47 L 12 47 Z"
-          fill="url(#msApexGrad)"
-          filter="url(#msApexGlow)"
+        {/* 360° Radar Field Boundary (Pack Radius) */}
+        <circle
+          cx="32"
+          cy="32"
+          r="26"
+          stroke="rgba(125,224,226,0.25)"
+          strokeWidth="1.5"
+          strokeDasharray="3 4"
         />
 
-        {/* Synchronized Telemetry Focal Node (The Live Pack Sync Beacon) */}
-        <circle cx="37" cy="23" r="3.2" fill="#ff8a68" />
-        <circle cx="37" cy="23" r="1.4" fill="#ffffff" />
+        {/* Compass Cardinal Heading Tick */}
+        <line
+          x1="32"
+          y1="2"
+          x2="32"
+          y2="6"
+          stroke="#7de0e2"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+
+        {/* Forward Heading Stealth Delta (Your bike on the road) */}
+        <path
+          d="M 32 10 L 49 47 L 32 38 L 15 47 Z"
+          fill="url(#msRadarGrad)"
+          filter="url(#msRadarGlow)"
+        />
+
+        {/* Live GPS Telemetry Pulse (Your real-time ping) */}
+        <circle cx="32" cy="27" r="3.2" fill="#ff8a68" />
+        <circle cx="32" cy="27" r="1.3" fill="#ffffff" />
+
+        {/* Surrounding Pack Crew Beacons (Active in sync) */}
+        <circle cx="50" cy="22" r="2.8" fill="#d6f66f" />
+        <circle cx="14" cy="22" r="2.8" fill="#7de0e2" />
       </svg>
 
       {showWordmark && (
