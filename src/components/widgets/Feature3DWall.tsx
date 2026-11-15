@@ -15,6 +15,7 @@ import {
   LayoutGrid,
   Zap,
   RotateCw,
+  Compass,
 } from "lucide-react";
 
 import {
@@ -130,6 +131,8 @@ export function Feature3DWall() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartRef = useRef<number | null>(null);
+  const lastDragTimeRef = useRef<number>(0);
+  const dragVelocityRef = useRef<number>(0);
 
   const total = FEATURE_LIST.length;
 
@@ -141,33 +144,65 @@ export function Feature3DWall() {
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
 
-  // Auto orbit
+  // Auto orbit with smooth timing
   useEffect(() => {
     if (!autoOrbit || isDragging) return;
-    const timer = setInterval(nextSlide, 4500);
+    const timer = setInterval(nextSlide, 4200);
     return () => clearInterval(timer);
   }, [autoOrbit, isDragging, nextSlide]);
 
-  // Pointer drag handling for 3D Wall rotation
+  // Wheel / Trackpad horizontal swipe support
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let wheelDebounce = 0;
+    const handleWheel = (e: WheelEvent) => {
+      if (viewMode === "grid") return;
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.shiftKey ? e.deltaY : 0;
+      if (Math.abs(delta) > 28) {
+        const now = Date.now();
+        if (now - wheelDebounce > 350) {
+          wheelDebounce = now;
+          if (delta > 0) nextSlide();
+          else prevSlide();
+        }
+      }
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: true });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, [viewMode, nextSlide, prevSlide]);
+
+  // Pointer drag handling with velocity calculation
   const handlePointerDown = (e: React.PointerEvent) => {
     if (viewMode === "grid") return;
     setIsDragging(true);
     dragStartRef.current = e.clientX;
+    lastDragTimeRef.current = Date.now();
+    dragVelocityRef.current = 0;
     (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDragging || dragStartRef.current === null) return;
+    const now = Date.now();
+    const dt = Math.max(1, now - lastDragTimeRef.current);
     const delta = e.clientX - dragStartRef.current;
+    dragVelocityRef.current = (delta - dragOffset) / dt;
+    lastDragTimeRef.current = now;
     setDragOffset(delta);
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
     if (!isDragging) return;
     setIsDragging(false);
-    if (dragOffset > 60) {
+
+    // Apply momentum threshold
+    const velocity = dragVelocityRef.current;
+    if (dragOffset > 50 || velocity > 0.4) {
       prevSlide();
-    } else if (dragOffset < -60) {
+    } else if (dragOffset < -50 || velocity < -0.4) {
       nextSlide();
     }
     setDragOffset(0);
@@ -187,12 +222,12 @@ export function Feature3DWall() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  // Interactive mouse tilt on active card
+  // Interactive mouse tilt with smooth specular coordinates
   const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMouseTilt({ x: x * 14, y: -y * 14 });
+    setMouseTilt({ x: x * 16, y: -y * 16 });
   };
 
   const handleCardMouseLeave = () => {
@@ -205,13 +240,13 @@ export function Feature3DWall() {
       <div className="ms-3d-toolbar">
         <div className="ms-3d-telemetry-badge">
           <span className="ms-telemetry-pulse" />
-          <span className="ms-telemetry-label">LUBAN 3D WALL</span>
+          <span className="ms-telemetry-label">LUBAN 3D CYLINDER</span>
           <span className="ms-telemetry-sep">·</span>
           <span className="ms-telemetry-yaw">
             YAW {((activeIndex / total) * 360).toFixed(0)}°
           </span>
           <span className="ms-telemetry-sep">·</span>
-          <span className="ms-telemetry-stat">60 FPS DEPTH</span>
+          <span className="ms-telemetry-stat">REACT BITS & MOTION SITES</span>
         </div>
 
         {/* View Mode Switcher */}
@@ -220,16 +255,16 @@ export function Feature3DWall() {
             type="button"
             className={`ms-mode-btn ${viewMode === "curved" ? "is-active" : ""}`}
             onClick={() => setViewMode("curved")}
-            title="Magnific-style 3D Curved Cylinder Wall"
+            title="Magnific & React Bits 3D Curved Cylinder Wall"
           >
             <Eye size={14} />
-            <span>3D Wall</span>
+            <span>3D Cylinder</span>
           </button>
           <button
             type="button"
             className={`ms-mode-btn ${viewMode === "tilt" ? "is-active" : ""}`}
             onClick={() => setViewMode("tilt")}
-            title="3D Isometric Tilt Flow"
+            title="MotionSites 3D Isometric Tilt Flow"
           >
             <Layers size={14} />
             <span>Tilt Flow</span>
@@ -306,7 +341,7 @@ export function Feature3DWall() {
           ))}
         </div>
       ) : (
-        /* 3D Curved Wall or Tilt Flow */
+        /* 3D Curved Cylinder Wall or MotionSites Tilt Flow */
         <div
           ref={containerRef}
           className={`ms-3d-stage ${viewMode === "curved" ? "is-curved-mode" : "is-tilt-mode"} ${
@@ -317,9 +352,12 @@ export function Feature3DWall() {
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
         >
+          {/* Ambient Lighting Floor Glow */}
+          <div className="ms-3d-floor-glow" />
+
           <div className="ms-3d-track">
             {FEATURE_LIST.map((item, idx) => {
-              // Calculate shortest distance in circular carousel
+              // Calculate shortest modular distance in circular carousel
               let offset = idx - activeIndex;
               if (offset > total / 2) offset -= total;
               if (offset < -total / 2) offset += total;
@@ -330,35 +368,38 @@ export function Feature3DWall() {
 
               if (!isVisible) return null;
 
-              // 3D Matrix Math
+              // Pure Mathematical 3D Polar Cylinder Math (React Bits & MotionSites formulation)
               let transform = "";
               let opacity = 1;
-              let zIndex = 50 - absOffset * 10;
+              let zIndex = 60 - absOffset * 10;
               let filter = "none";
 
               if (viewMode === "curved") {
-                // Magnific 3D Cylinder Curve
-                const baseAngle = offset * 26 + (dragOffset / 12);
-                const transZ = isCurrent
-                  ? 50
-                  : -Math.min(220, absOffset * 85);
-                const transX = offset * 290 + dragOffset;
-                const scale = Math.max(0.78, 1 - absOffset * 0.08);
+                // True Cylindrical Geometry
+                const cylinderRadius = 620; // Virtual cylinder radius
+                const angleDeg = offset * 25 + dragOffset * 0.08;
+                const angleRad = (angleDeg * Math.PI) / 180;
 
-                transform = `translateX(${transX}px) translateZ(${transZ}px) rotateY(${baseAngle}deg) scale(${scale})`;
+                const transX = Math.sin(angleRad) * cylinderRadius;
+                const transZ = (Math.cos(angleRad) - 1) * cylinderRadius + (isCurrent ? 75 : -absOffset * 25);
+                const scale = Math.max(0.76, 1 - absOffset * 0.07);
+
+                transform = `translateX(${transX.toFixed(1)}px) translateZ(${transZ.toFixed(1)}px) rotateY(${angleDeg.toFixed(1)}deg) scale(${scale.toFixed(2)})`;
+
                 if (isCurrent && !isDragging) {
-                  transform += ` rotateX(${mouseTilt.y}deg) rotateY(${mouseTilt.x}deg)`;
+                  transform += ` rotateX(${mouseTilt.y.toFixed(1)}deg) rotateY(${mouseTilt.x.toFixed(1)}deg)`;
                 }
+
                 opacity = Math.max(0.25, 1 - absOffset * 0.22);
                 if (absOffset >= 2) {
                   filter = `blur(${Math.min(4, absOffset * 1.5)}px)`;
                 }
               } else {
-                // 3D Tilt Flow
-                const transX = offset * 260 + dragOffset;
-                const transZ = -absOffset * 90;
-                const rotY = offset > 0 ? -32 : offset < 0 ? 32 : 0;
-                const scale = Math.max(0.8, 1 - absOffset * 0.09);
+                // MotionSites 3D Isometric Cascade
+                const transX = offset * 265 + dragOffset;
+                const transZ = -absOffset * 95;
+                const rotY = offset > 0 ? -34 : offset < 0 ? 34 : 0;
+                const scale = Math.max(0.8, 1 - absOffset * 0.08);
 
                 transform = `translateX(${transX}px) translateZ(${transZ}px) rotateY(${rotY}deg) scale(${scale})`;
                 opacity = Math.max(0.3, 1 - absOffset * 0.2);
@@ -373,7 +414,9 @@ export function Feature3DWall() {
                     opacity,
                     zIndex,
                     filter,
-                    transition: isDragging ? "none" : "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease",
+                    transition: isDragging
+                      ? "none"
+                      : "transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, filter 0.5s ease",
                   }}
                   onClick={() => {
                     if (offset !== 0) setActiveIndex(idx);
@@ -381,6 +424,9 @@ export function Feature3DWall() {
                   onMouseMove={isCurrent ? handleCardMouseMove : undefined}
                   onMouseLeave={isCurrent ? handleCardMouseLeave : undefined}
                 >
+                  {/* React Bits StarBorder Glow on Active Card */}
+                  {isCurrent && <div className="ms-star-border-aura" />}
+
                   {/* Card Artwork Header */}
                   <div className="ms-card-artwork-frame">
                     <item.artwork className="ms-card-artwork-svg" />
@@ -411,14 +457,14 @@ export function Feature3DWall() {
                       </span>
                     </div>
 
-                    {/* Subtle 3D Glass Specular Sheen */}
+                    {/* React Bits Dynamic Specular Sheen */}
                     <div
                       className="ms-card-specular-sheen"
                       style={{
                         background: isCurrent
-                          ? `radial-gradient(circle at ${50 + mouseTilt.x * 2}% ${
+                          ? `radial-gradient(550px circle at ${50 + mouseTilt.x * 2}% ${
                               50 + mouseTilt.y * 2
-                            }%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 65%)`
+                            }%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 60%)`
                           : "none",
                       }}
                     />
@@ -426,7 +472,9 @@ export function Feature3DWall() {
 
                   {/* Card Content Footer */}
                   <div className="ms-card-body">
-                    <h3 className="ms-card-title">{item.title}</h3>
+                    <h3 className={`ms-card-title ${isCurrent ? "ms-shiny-title" : ""}`}>
+                      {item.title}
+                    </h3>
                     <p className="ms-card-copy">{item.copy}</p>
 
                     <div className="ms-card-footer-action">
@@ -462,7 +510,7 @@ export function Feature3DWall() {
           ))}
         </div>
         <div className="ms-3d-hint hidden md:flex items-center gap-1.5 text-xs text-[var(--ms-muted,#93a7b0)]">
-          <span>← Drag or use arrow keys to rotate in 3D →</span>
+          <span>← Drag, use arrow keys, or trackpad swipe to rotate in 3D →</span>
         </div>
       </div>
     </div>

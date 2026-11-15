@@ -1,5 +1,5 @@
 /* ============================================================
-   Feature 3D Wall Carousel (Magnific Style + Luban 3D Telemetry)
+   Feature 3D Wall Carousel (React Bits & MotionSites Engine)
    ============================================================ */
 .ms-3d-wall-wrapper {
   margin-top: 35px;
@@ -135,10 +135,10 @@
 /* 3D Stage & Cylindrical Track */
 .ms-3d-stage {
   position: relative;
-  height: 540px;
+  height: 560px;
   width: 100%;
   perspective: 1200px;
-  perspective-origin: center 46%;
+  perspective-origin: 50% 50%;
   transform-style: preserve-3d;
   display: flex;
   align-items: center;
@@ -151,6 +151,19 @@
 
 .ms-3d-stage.is-grabbing {
   cursor: grabbing;
+}
+
+/* Ambient 3D Reflection Floor Glow */
+.ms-3d-floor-glow {
+  position: absolute;
+  bottom: 10px;
+  left: 10%;
+  right: 10%;
+  height: 80px;
+  background: radial-gradient(ellipse at center, rgba(125, 224, 226, 0.12) 0%, rgba(214, 246, 111, 0.05) 45%, transparent 70%);
+  pointer-events: none;
+  filter: blur(25px);
+  transform: rotateX(80deg);
 }
 
 .ms-3d-track {
@@ -178,11 +191,25 @@
   will-change: transform, opacity, filter;
 }
 
+/* React Bits StarBorder Glow Aura */
+.ms-star-border-aura {
+  position: absolute;
+  inset: -1px;
+  border-radius: 22px;
+  border: 1.5px solid transparent;
+  background: linear-gradient(135deg, rgba(125, 224, 226, 0.8), rgba(214, 246, 111, 0.6), rgba(255, 138, 104, 0.8)) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 12;
+}
+
 .ms-3d-card.is-active {
-  border-color: rgba(125, 224, 226, 0.45);
   box-shadow:
-    0 28px 60px -15px rgba(0, 0, 0, 0.8),
-    0 0 35px -5px rgba(125, 224, 226, 0.15);
+    0 32px 64px -15px rgba(0, 0, 0, 0.85),
+    0 0 45px -5px rgba(125, 224, 226, 0.2);
 }
 
 .ms-3d-card:hover {
@@ -299,6 +326,20 @@
   margin: 0 0 8px 0;
   color: var(--ms-cream);
   letter-spacing: -0.5px;
+}
+
+/* React Bits ShinyText Shimmer */
+.ms-shiny-title {
+  background: linear-gradient(110deg, var(--ms-cream) 35%, #ffffff 50%, var(--ms-cream) 65%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shiny-sweep 4s linear infinite;
+}
+
+@keyframes shiny-sweep {
+  0% { background-position: 150% 0; }
+  100% { background-position: -150% 0; }
 }
 
 .ms-card-copy {
@@ -458,7 +499,7 @@
 
 @media (max-width: 768px) {
   .ms-3d-stage {
-    height: 490px;
+    height: 500px;
     perspective: 850px;
   }
   .ms-3d-card {
@@ -477,7 +518,8 @@
   .ms-3d-card {
     transition: none !important;
   }
-  .ms-telemetry-pulse {
+  .ms-telemetry-pulse,
+  .ms-shiny-title {
     animation: none !important;
   }
 }
