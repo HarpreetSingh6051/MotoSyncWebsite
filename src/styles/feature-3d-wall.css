@@ -1,0 +1,483 @@
+/* ============================================================
+   Feature 3D Wall Carousel (Magnific Style + Luban 3D Telemetry)
+   ============================================================ */
+.ms-3d-wall-wrapper {
+  margin-top: 35px;
+  position: relative;
+  width: 100%;
+}
+
+.ms-3d-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+.ms-3d-telemetry-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(16, 30, 37, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(125, 224, 226, 0.25);
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--ms-cream);
+  letter-spacing: 0.8px;
+}
+
+.ms-telemetry-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ms-lime);
+  box-shadow: 0 0 8px var(--ms-lime);
+  animation: telemetry-pulse 1.8s infinite;
+}
+
+@keyframes telemetry-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.ms-telemetry-sep {
+  opacity: 0.35;
+}
+
+.ms-telemetry-yaw {
+  color: var(--ms-cyan);
+  font-weight: 700;
+}
+
+.ms-telemetry-stat {
+  color: var(--ms-lime);
+  font-weight: 700;
+}
+
+.ms-3d-modes {
+  display: inline-flex;
+  background: rgba(16, 30, 37, 0.7);
+  padding: 3px;
+  border-radius: 12px;
+  border: 1px solid var(--ms-line);
+  gap: 3px;
+}
+
+.ms-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: var(--ms-muted);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ms-mode-btn:hover {
+  color: var(--ms-cream);
+}
+
+.ms-mode-btn.is-active {
+  background: var(--ms-panel);
+  color: var(--ms-cyan);
+  border: 1px solid rgba(125, 224, 226, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ms-3d-nav-ctrls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ms-ctrl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--ms-line);
+  background: var(--ms-panel);
+  color: var(--ms-cream);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ms-ctrl-btn:hover {
+  border-color: var(--ms-cyan);
+  color: var(--ms-cyan);
+}
+
+.ms-ctrl-btn.is-active {
+  border-color: var(--ms-lime);
+  color: var(--ms-lime);
+  background: rgba(214, 246, 111, 0.1);
+}
+
+.ms-arrow-btn {
+  padding: 7px;
+  border-radius: 50%;
+}
+
+/* 3D Stage & Cylindrical Track */
+.ms-3d-stage {
+  position: relative;
+  height: 540px;
+  width: 100%;
+  perspective: 1200px;
+  perspective-origin: center 46%;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  overflow: visible;
+}
+
+.ms-3d-stage.is-grabbing {
+  cursor: grabbing;
+}
+
+.ms-3d-track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.ms-3d-card {
+  position: absolute;
+  width: 330px;
+  border-radius: 22px;
+  background: var(--ms-panel);
+  border: 1px solid var(--ms-line);
+  box-shadow: 0 24px 50px -15px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  cursor: pointer;
+  pointer-events: auto;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}
+
+.ms-3d-card.is-active {
+  border-color: rgba(125, 224, 226, 0.45);
+  box-shadow:
+    0 28px 60px -15px rgba(0, 0, 0, 0.8),
+    0 0 35px -5px rgba(125, 224, 226, 0.15);
+}
+
+.ms-3d-card:hover {
+  border-color: var(--ms-cyan);
+}
+
+.ms-card-artwork-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #091216;
+  overflow: hidden;
+}
+
+.ms-card-artwork-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ms-card-luban-viewport {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 76px;
+  height: 76px;
+  border-radius: 12px;
+  background: rgba(16, 30, 37, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(125, 224, 226, 0.4);
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.ms-card-luban-label {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--ms-lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.luban-micro-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.ms-card-top-bar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.ms-card-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(16, 30, 37, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--ms-cream);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.ms-card-num-badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.65);
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--ms-cream);
+}
+
+.ms-card-specular-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
+}
+
+.ms-card-body {
+  padding: 18px 20px 20px;
+}
+
+.ms-card-title {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 8px 0;
+  color: var(--ms-cream);
+  letter-spacing: -0.5px;
+}
+
+.ms-card-copy {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ms-muted);
+  margin: 0 0 14px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ms-card-footer-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ms-card-action-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.ms-card-accent-line {
+  width: 32px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+/* Bottom Pagination & Progress Bar */
+.ms-3d-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25px;
+  padding: 0 6px;
+}
+
+.ms-3d-counter {
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--ms-muted);
+}
+
+.ms-3d-counter b {
+  color: var(--ms-cyan);
+}
+
+.ms-3d-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ms-3d-dot {
+  width: 24px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.ms-3d-dot:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.ms-3d-dot.is-active {
+  width: 42px;
+  background: var(--ms-cyan);
+}
+
+/* Overview Flat Grid View */
+.ms-3d-grid-view {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 15px;
+}
+
+.ms-grid-card {
+  border-radius: 18px;
+  background: var(--ms-panel);
+  border: 1px solid var(--ms-line);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.ms-grid-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--ms-cyan);
+}
+
+.ms-grid-card.is-focused {
+  border-color: var(--ms-lime);
+}
+
+.ms-grid-card-art {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #091216;
+}
+
+.ms-grid-luban-overlay {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: rgba(16, 30, 37, 0.85);
+  border: 1px solid rgba(125, 224, 226, 0.4);
+  overflow: hidden;
+}
+
+.ms-grid-card-content {
+  padding: 16px;
+}
+
+.ms-grid-card-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.ms-grid-card-content h3 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.25;
+  margin: 0 0 6px 0;
+  color: var(--ms-cream);
+}
+
+.ms-grid-card-content p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ms-muted);
+  margin: 0;
+}
+
+/* Mobile & Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .ms-3d-grid-view {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ms-3d-stage {
+    height: 490px;
+    perspective: 850px;
+  }
+  .ms-3d-card {
+    width: 285px;
+  }
+  .ms-3d-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ms-3d-grid-view {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-3d-card {
+    transition: none !important;
+  }
+  .ms-telemetry-pulse {
+    animation: none !important;
+  }
+}
