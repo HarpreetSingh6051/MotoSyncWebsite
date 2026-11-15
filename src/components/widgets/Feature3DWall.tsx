@@ -109,7 +109,8 @@ export function Feature3DWall() {
   const [mouseTilt, setMouseTilt] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const dragStartRef = useRef<number | null>(null);
+  const dragStartRef = useRef<{ x: number; y: number } | null>(null);
+  const isHorizontalDragRef = useRef<boolean>(false);
   const lastDragTimeRef = useRef<number>(0);
   const dragVelocityRef = useRef<number>(0);
 
@@ -153,41 +154,62 @@ export function Feature3DWall() {
     return () => el.removeEventListener("wheel", handleWheel);
   }, [viewMode, nextSlide, prevSlide]);
 
-  // Pointer drag
+  // Pointer drag - intelligent horizontal/vertical axis discrimination
   const handlePointerDown = (e: React.PointerEvent) => {
     if (viewMode === "grid") return;
-    setIsDragging(true);
-    dragStartRef.current = e.clientX;
+    dragStartRef.current = { x: e.clientX, y: e.clientY };
+    isHorizontalDragRef.current = false;
     lastDragTimeRef.current = Date.now();
     dragVelocityRef.current = 0;
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
-    if (!isDragging || dragStartRef.current === null) return;
-    const now = Date.now();
-    const dt = Math.max(1, now - lastDragTimeRef.current);
-    const delta = e.clientX - dragStartRef.current;
-    dragVelocityRef.current = (delta - dragOffset) / dt;
-    lastDragTimeRef.current = now;
-    setDragOffset(delta);
+    if (!dragStartRef.current) return;
+    const dx = e.clientX - dragStartRef.current.x;
+    const dy = e.clientY - dragStartRef.current.y;
+
+    // Check gesture direction if not locked yet
+    if (!isHorizontalDragRef.current) {
+      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        // Confirmed horizontal intent: engage drag and capture pointer
+        isHorizontalDragRef.current = true;
+        setIsDragging(true);
+        try {
+          (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
+        } catch {}
+      } else if (Math.abs(dy) > 10) {
+        // Vertical scroll intent: release and let page scroll smoothly
+        dragStartRef.current = null;
+        return;
+      }
+    }
+
+    if (isHorizontalDragRef.current) {
+      const now = Date.now();
+      const dt = Math.max(1, now - lastDragTimeRef.current);
+      dragVelocityRef.current = (dx - dragOffset) / dt;
+      lastDragTimeRef.current = now;
+      setDragOffset(dx);
+    }
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
-    if (!isDragging) return;
-    setIsDragging(false);
-
-    const velocity = dragVelocityRef.current;
-    if (dragOffset > 50 || velocity > 0.4) {
-      prevSlide();
-    } else if (dragOffset < -50 || velocity < -0.4) {
-      nextSlide();
+    if (isHorizontalDragRef.current) {
+      const velocity = dragVelocityRef.current;
+      if (dragOffset > 45 || velocity > 0.35) {
+        prevSlide();
+      } else if (dragOffset < -45 || velocity < -0.35) {
+        nextSlide();
+      }
+      try {
+        (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+      } catch {}
     }
+
+    setIsDragging(false);
+    isHorizontalDragRef.current = false;
     setDragOffset(0);
     dragStartRef.current = null;
-    try {
-      (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
-    } catch {}
   };
 
   // Keyboard navigation

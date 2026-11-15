@@ -8,6 +8,7 @@
   overflow: hidden;
   pointer-events: none;
   z-index: -1;
+  contain: paint;
 }
 .atmosphere-glow {
   position: absolute;
@@ -16,6 +17,8 @@
   border-radius: 50%;
   filter: blur(90px);
   opacity: 0.14;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
   animation: ambient-drift 24s ease-in-out infinite alternate;
 }
 .glow-one {

@@ -424,6 +424,8 @@
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--ms-line);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 .ms-nav {
   height: 90px;

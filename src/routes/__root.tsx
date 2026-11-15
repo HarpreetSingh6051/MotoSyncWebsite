@@ -8,6 +8,7 @@ import {
 import appCss from "../styles/globals.css?url";
 import { site } from "@/lib/site";
 import { IMAGES } from "@/lib/content";
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -101,7 +102,9 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           aria-hidden
           className="grain pointer-events-none fixed inset-0 z-[65] opacity-[0.035] mix-blend-soft-light"
         />
-        {children}
+        <SmoothScrollProvider>
+          {children}
+        </SmoothScrollProvider>
         <Scripts />
       </body>
     </html>

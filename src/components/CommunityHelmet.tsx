@@ -189,22 +189,51 @@ export function CommunityHelmet() {
         });
         observer.observe(el);
 
+        let startX = 0;
+        let startY = 0;
+        let isHorizDrag = false;
+
         const down = (e: PointerEvent) => {
-          drag = true;
+          startX = e.clientX;
+          startY = e.clientY;
           lastX = e.clientX;
-          el.setPointerCapture(e.pointerId);
+          isHorizDrag = false;
+          drag = false;
         };
 
         const move = (e: PointerEvent) => {
-          if (drag) {
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+
+          if (!isHorizDrag) {
+            if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+              // Intentional 3D rotation gesture: engage drag and capture pointer
+              isHorizDrag = true;
+              drag = true;
+              try {
+                el.setPointerCapture(e.pointerId);
+              } catch {}
+            } else if (Math.abs(dy) > 10) {
+              // User is scrolling vertically down the page: allow smooth natural scroll
+              return;
+            }
+          }
+
+          if (isHorizDrag && drag) {
             const delta = (e.clientX - lastX) * 0.008;
             targetYaw += delta;
             lastX = e.clientX;
           }
         };
 
-        const up = () => {
+        const up = (e: PointerEvent) => {
+          if (isHorizDrag) {
+            try {
+              el.releasePointerCapture(e.pointerId);
+            } catch {}
+          }
           drag = false;
+          isHorizDrag = false;
         };
 
         el.addEventListener("pointerdown", down);
