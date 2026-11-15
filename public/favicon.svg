@@ -1,15 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="16" fill="#101e25"/>
+  <rect width="64" height="64" rx="16" fill="#0c181f"/>
   <defs>
-    <linearGradient id="msFaviconGrad" x1="6" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+    <linearGradient id="msFaviconGrad" x1="8" y1="12" x2="56" y2="52" gradientUnits="userSpaceOnUse">
       <stop stop-color="#7de0e2"/>
       <stop offset="0.5" stop-color="#9bf3aa"/>
       <stop offset="1" stop-color="#d6f66f"/>
     </linearGradient>
   </defs>
-  <circle cx="32" cy="32" r="28" stroke="#33464e" stroke-width="1.5" stroke-dasharray="3 4"/>
-  <path d="M14 45L24 16C24.5 14.5 26.2 13.5 28 14L33 15.5C34.5 16 35.2 17.5 34.6 19L27 41C26.5 42.5 25 43.5 23.5 43L16 41C14.5 40.5 13.5 39 14 37.5Z" fill="url(#msFaviconGrad)"/>
-  <path d="M26 21L42 15C44.5 14 47.5 15.5 48.5 18L51 25C52 27.5 50.8 30.5 48.2 31.5L34 37C31.5 38 29.8 40.5 30.5 43L32 48C32.8 50.8 35.8 52.2 38.5 51.2L51 46.5" stroke="url(#msFaviconGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M37 25L43 31L37 37" stroke="#101e25" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="43" cy="31" r="2.5" fill="#d6f66f"/>
+  <!-- Subtle aerodynamic radar track -->
+  <circle cx="32" cy="32" r="28" stroke="rgba(125,224,226,0.2)" stroke-width="1.2" stroke-dasharray="3 5"/>
+  <!-- The Apex Winglet Monogram -->
+  <g transform="translate(-1, 0)">
+    <path
+      d="M 12 47 L 22.5 14.5 C 23.2 12.5 25.2 11.2 27.5 11.5 L 30 12 C 32 12.5 33.2 14.2 33.8 16 L 37.5 27 L 41.2 16 C 41.8 14.2 43 12.5 45 12 L 47.5 11.5 C 49.8 11.2 51.8 12.5 52.5 14.5 L 63 47 L 54 47 L 47 25 L 42.5 37 C 41.8 39 39.8 40.2 37.8 40 L 36.2 40 C 34.2 40.2 32.2 39 31.5 37 L 27 25 L 20 47 L 12 47 Z"
+      fill="url(#msFaviconGrad)"
+    />
+    <!-- Telemetry Pulse Node -->
+    <circle cx="37" cy="23" r="3.2" fill="#ff8a68"/>
+    <circle cx="37" cy="23" r="1.4" fill="#ffffff"/>
+  </g>
 </svg>

@@ -25,3 +25,7 @@ Thumbs.db
 logs
 *.log
 npm-debug.log*
+
+# scratch exploration
+scratch/
+

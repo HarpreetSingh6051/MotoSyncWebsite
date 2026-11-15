@@ -7,12 +7,12 @@ interface LogoProps extends SVGProps<SVGSVGElement> {
 }
 
 /**
- * MotoSync Bespoke Brand Mark
+ * MotoSync Bespoke Brand Mark — The Apex Winglet
  * 
- * An original, precision-crafted monogram combining:
- * 1. Dual leaning motorcycle apex trajectories (18° dynamic velocity rake)
- * 2. An interconnected "M" and "S" geometry forming an infinite sync loop
- * 3. High-voltage electric cyan (#7de0e2) and neon lime (#d6f66f) speed accents
+ * An iconic high-velocity monogram engineered at the intersection of:
+ * 1. Motorcycle Racing Aerodynamics: Dual superbike winglets canted at a dynamic 22° rake angle.
+ * 2. Pack Echelon Formation: Two synchronized riders leaning together through a high-speed apex.
+ * 3. Live Telemetry Mesh: Integrated coral-flame apex focal beacon connecting the pack in real-time.
  */
 export function MotoSyncLogo({
   size = 32,
@@ -24,7 +24,7 @@ export function MotoSyncLogo({
   const markHeight = size;
 
   return (
-    <div className={`motosync-logo-container inline-flex items-center gap-3 ${className}`}>
+    <div className={`motosync-logo-container inline-flex items-center gap-3 select-none ${className}`}>
       <svg
         width={markWidth}
         height={markHeight}
@@ -37,69 +37,41 @@ export function MotoSyncLogo({
       >
         <defs>
           {/* Main neon velocity gradient */}
-          <linearGradient id="msLogoGradient" x1="4" y1="4" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+          <linearGradient id="msApexGrad" x1="8" y1="12" x2="56" y2="52" gradientUnits="userSpaceOnUse">
             <stop stopColor="#7de0e2" />
             <stop offset="0.5" stopColor="#9bf3aa" />
             <stop offset="1" stopColor="#d6f66f" />
           </linearGradient>
 
-          {/* Secondary depth gradient for rear wing */}
-          <linearGradient id="msLogoDepth" x1="12" y1="20" x2="52" y2="52" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#d6f66f" stopOpacity="0.85" />
-            <stop offset="1" stopColor="#ff8a68" stopOpacity="0.75" />
-          </linearGradient>
-
-          {/* Glow filter */}
-          <filter id="msLogoGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#7de0e2" floodOpacity="0.35" />
+          {/* Depth glow filter */}
+          <filter id="msApexGlow" x="-25%" y="-25%" width="150%" height="150%">
+            <feDropShadow dx="0" dy="2" stdDeviation="5" floodColor="#7de0e2" floodOpacity="0.45" />
           </filter>
         </defs>
 
-        {/* Outer aerodynamic speed ring (subtle radar track) */}
-        <circle
-          cx="32"
-          cy="32"
-          r="29"
-          stroke="var(--ms-line, #33464e)"
-          strokeWidth="1.5"
-          strokeDasharray="4 6"
-          strokeOpacity="0.6"
-        />
-
-        {/* Left Wing / Apex Fork (First leg of 'M' leaning into curve) */}
+        {/* 
+          The Apex Winglet Monogram
+          - Left Blade: Ascending motorcycle rake angle (Lead Rider)
+          - Center Dive: High-speed apex lean
+          - Right Blade: Ascending second crest (Wingman / Pack Sync)
+          - Chamfered base: Aerodynamic winglet cutouts
+        */}
         <path
-          d="M13 46L24 16C24.5 14.5 26.2 13.5 28 14L34 16C35.5 16.5 36.2 18.2 35.5 19.8L27 41C26.5 42.5 24.8 43.5 23 43L15 41C13.5 40.5 12.5 38.8 13 37.2Z"
-          fill="url(#msLogoGradient)"
-          filter="url(#msLogoGlow)"
+          d="M 12 47 L 22.5 14.5 C 23.2 12.5 25.2 11.2 27.5 11.5 L 30 12 C 32 12.5 33.2 14.2 33.8 16 L 37.5 27 L 41.2 16 C 41.8 14.2 43 12.5 45 12 L 47.5 11.5 C 49.8 11.2 51.8 12.5 52.5 14.5 L 63 47 L 54 47 L 47 25 L 42.5 37 C 41.8 39 39.8 40.2 37.8 40 L 36.2 40 C 34.2 40.2 32.2 39 31.5 37 L 27 25 L 20 47 L 12 47 Z"
+          fill="url(#msApexGrad)"
+          filter="url(#msApexGlow)"
         />
 
-        {/* Intersecting Sync Loop (Twin apex curve forming the 'S' and bridge of 'M') */}
-        <path
-          d="M26 21L42 15C44.5 14 47.5 15.5 48.5 18L51 25C52 27.5 50.8 30.5 48.2 31.5L34 37C31.5 38 29.8 40.5 30.5 43L32 48C32.8 50.8 35.8 52.2 38.5 51.2L51 46.5"
-          stroke="url(#msLogoGradient)"
-          strokeWidth="4.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        {/* Dynamic Velocity Apex Chevron (Forward telemetry indicator) */}
-        <path
-          d="M37 25L43 31L37 37"
-          stroke="var(--ms-night, #101e25)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        {/* Center Pack Pulsing Apex Point */}
-        <circle cx="43" cy="31" r="2.5" fill="var(--ms-lime, #d6f66f)" />
+        {/* Synchronized Telemetry Focal Node (The Live Pack Sync Beacon) */}
+        <circle cx="37" cy="23" r="3.2" fill="#ff8a68" />
+        <circle cx="37" cy="23" r="1.4" fill="#ffffff" />
       </svg>
 
       {showWordmark && (
         <span className="motosync-wordmark font-display font-extrabold tracking-tight text-xl leading-none flex items-center">
           <span className="text-[var(--ms-white,#f7f8ef)]">MOTO</span>
           <span className="text-[var(--ms-lime,#d6f66f)]">SYNC</span>
-          <span className="ml-1 text-[9px] font-mono text-[var(--ms-cyan,#7de0e2)] uppercase tracking-widest bg-[rgba(125,224,226,0.12)] border border-[rgba(125,224,226,0.3)] px-1.5 py-0.5 rounded-full">
+          <span className="ml-1.5 text-[9px] font-mono font-bold text-[var(--ms-cyan,#7de0e2)] uppercase tracking-widest bg-[rgba(125,224,226,0.12)] border border-[rgba(125,224,226,0.3)] px-1.5 py-0.5 rounded-full">
             PRO
           </span>
         </span>
