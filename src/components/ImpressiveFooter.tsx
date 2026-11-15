@@ -55,7 +55,7 @@ export function ImpressiveFooter() {
             </span>
             <span className="ms-badge-item">
               <Smartphone size={14} className="text-[var(--ms-coral,#ff8a68)]" />
-              iOS & Android PWA
+              iOS & Android
             </span>
           </div>
         </div>
@@ -68,7 +68,6 @@ export function ImpressiveFooter() {
             <div className="ms-qr-inner">
               <QrCode />
             </div>
-            <span className="ms-qr-caption">Instant Mobile Launch · No App Store Wait</span>
           </div>
         </div>
       </div>

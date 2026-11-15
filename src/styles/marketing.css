@@ -810,17 +810,12 @@
 .ms-about {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: var(--ms-night);
-  color: var(--ms-white);
-  border-top: 1px solid var(--ms-line);
-  border-bottom: 1px solid var(--ms-line);
+  background: var(--ms-cream);
+  color: var(--ms-night);
   scroll-margin-top: 30px;
-  position: relative;
 }
 .ms-about-art {
-  background: radial-gradient(circle at 30% 40%, rgba(255, 138, 104, 0.22), transparent 70%),
-              radial-gradient(circle at 75% 75%, rgba(125, 224, 226, 0.18), transparent 60%),
-              var(--ms-panel);
+  background: var(--ms-coral);
   position: relative;
   min-height: 540px;
   padding: 70px 10%;
@@ -828,7 +823,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-right: 1px solid var(--ms-line);
 }
 .ms-about-word {
   font-family: "Space Grotesk";
@@ -837,69 +831,64 @@
   line-height: 0.95;
   letter-spacing: -5px;
   z-index: 1;
-  transform: rotate(-6deg);
-  color: var(--ms-white);
+  transform: rotate(-8deg);
+  color: var(--ms-night);
 }
 .ms-about-word em {
-  color: var(--ms-lime);
+  color: var(--ms-night);
   font-size: 0.58em;
 }
 .ms-about-orbit {
   position: absolute;
   width: 500px;
   height: 500px;
-  border: 45px solid var(--ms-line);
+  border: 60px solid var(--ms-night);
   border-radius: 50%;
-  opacity: 0.25;
+  opacity: 0.08;
   top: 10px;
   left: 20%;
-  pointer-events: none;
 }
 .ms-about-stamp {
   margin-top: 50px;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 2px;
   line-height: 1.8;
   z-index: 1;
-  color: var(--ms-cyan);
-  font-family: monospace;
+  color: var(--ms-night);
 }
 .ms-about-copy {
   padding: 70px 12%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  color: var(--ms-night);
 }
 .ms-about-copy em {
-  color: var(--ms-lime);
+  color: var(--ms-night);
 }
 .ms-about-copy > p {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.8;
   margin: 25px 0;
-  color: var(--ms-muted);
+  color: #3f5159;
 }
 .ms-principle {
   display: flex;
   gap: 15px;
-  margin: 20px 0;
+  margin: 25px 0;
 }
 .ms-principle svg {
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
-  color: var(--ms-lime);
+  width: 20px;
+  color: var(--ms-night);
 }
 .ms-principle h3 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--ms-white);
+  color: var(--ms-night);
 }
 .ms-principle p {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.7;
   margin-top: 5px;
-  color: var(--ms-muted);
+  color: #4f636c;
 }
 .ms-plan-grid {
   display: grid;
@@ -998,59 +987,44 @@
   margin-top: 18px;
 }
 .ms-finale {
-  padding: 100px 5% 90px;
+  padding: 80px 5%;
   text-align: center;
-  background: radial-gradient(ellipse at 50% 120%, rgba(125, 224, 226, 0.22), transparent 75%),
-              radial-gradient(ellipse at 50% -20%, rgba(214, 246, 111, 0.12), transparent 60%),
-              var(--ms-night);
-  color: var(--ms-white);
+  background: var(--ms-cyan);
+  color: var(--ms-night);
   position: relative;
   overflow: hidden;
-  border-top: 1px solid var(--ms-line);
-  border-bottom: 1px solid var(--ms-line);
-}
-.ms-finale::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--ms-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--ms-line) 1px, transparent 1px);
-  background-size: 80px 80px;
-  opacity: 0.12;
-  mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 75%);
-  pointer-events: none;
 }
 .ms-finale .ms-eyebrow {
   justify-content: center;
+  color: var(--ms-night);
 }
 .ms-finale h2 {
-  font-size: clamp(55px, 9vw, 130px);
+  font-size: clamp(60px, 10vw, 140px);
   line-height: 0.95;
-  letter-spacing: -4px;
+  letter-spacing: -5px;
   margin: 30px 0;
-  color: var(--ms-white);
+  color: var(--ms-night);
 }
 .ms-finale em {
-  color: var(--ms-lime);
+  color: var(--ms-night);
 }
 .ms-finale .ms-button {
-  background: var(--ms-lime);
-  color: var(--ms-night);
+  background: var(--ms-night);
+  color: var(--ms-white);
+  border: none;
   font-weight: 700;
-  box-shadow: 0 10px 30px rgba(214, 246, 111, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 .ms-finale .ms-button:hover {
+  background: var(--ms-panel);
   transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(214, 246, 111, 0.4);
 }
 .ms-finale-note {
   display: block;
-  font-size: 12px;
-  color: var(--ms-muted);
-  margin-top: 25px;
-  letter-spacing: 0.5px;
+  font-size: 11px;
+  margin-top: 22px;
+  color: var(--ms-night);
+  opacity: 0.85;
 }
 
 /* ============================================================
@@ -1061,10 +1035,11 @@
   border-top: 1px solid var(--ms-line);
   position: relative;
   z-index: 20;
+  padding-top: 60px;
 }
 .ms-footer-qr-card {
   max-width: 1340px;
-  margin: -50px auto 70px;
+  margin: 0 auto 60px;
   background: linear-gradient(135deg, rgba(23, 44, 52, 0.92), rgba(16, 30, 37, 0.98));
   border: 1px solid rgba(125, 224, 226, 0.25);
   border-radius: 28px;
