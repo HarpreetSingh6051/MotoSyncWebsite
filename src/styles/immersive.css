@@ -1,0 +1,749 @@
+.motosync-site {
+  position: relative;
+  isolation: isolate;
+}
+.ms-atmosphere {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+.atmosphere-glow {
+  position: absolute;
+  width: 1000px;
+  height: 1300px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.14;
+  animation: ambient-drift 24s ease-in-out infinite alternate;
+}
+.glow-one {
+  top: 400px;
+  left: -600px;
+  background: radial-gradient(ellipse, var(--ms-cyan), transparent 65%);
+}
+.glow-two {
+  top: 1500px;
+  right: -600px;
+  background: radial-gradient(ellipse, var(--ms-coral), transparent 65%);
+  animation-delay: -12s;
+}
+.atmosphere-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--ms-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ms-line) 1px, transparent 1px);
+  background-size: 90px 90px;
+  opacity: 0.15;
+  mask-image: linear-gradient(transparent, black 12%, black 70%, transparent);
+}
+.atmosphere-trails {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 65%;
+  fill: none;
+  stroke: var(--ms-cyan);
+  stroke-width: 1;
+  opacity: 0.12;
+}
+.atmosphere-trails circle {
+  fill: var(--ms-lime);
+}
+@keyframes ambient-drift {
+  to {
+    transform: translate(100px, 120px) scale(1.15);
+  }
+}
+.clubhouse-section {
+  padding-top: 20px;
+}
+.clubhouse-intro {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 45px;
+}
+.clubhouse-intro .ms-eyebrow {
+  justify-content: center;
+}
+.clubhouse-intro h2 {
+  font-size: clamp(42px, 5.7vw, 76px);
+}
+.clubhouse-intro > p {
+  max-width: 490px;
+  margin: 24px auto 0;
+  color: var(--ms-muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.clubhouse-shell {
+  border: 1px solid var(--ms-line);
+  border-radius: 22px;
+  background: var(--ms-panel);
+  box-shadow:
+    0 35px 90px color-mix(in srgb, var(--ms-night) 85%, transparent),
+    0 0 70px color-mix(in srgb, var(--ms-cyan) 6%, transparent);
+  overflow: hidden;
+}
+.clubhouse-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 26px;
+  border-bottom: 1px solid var(--ms-line);
+  background: color-mix(in srgb, var(--ms-night) 70%, transparent);
+}
+.clubhouse-logo {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  background: var(--ms-lime);
+  color: var(--ms-night);
+  border-radius: 13px;
+  transform: rotate(-7deg);
+}
+.clubhouse-toolbar strong {
+  font-size: 13px;
+}
+.clubhouse-toolbar small {
+  display: block;
+  font-size: 10px;
+  color: var(--ms-muted);
+  margin-top: 4px;
+}
+.clubhouse-demo {
+  margin-left: auto;
+  font-size: 8px;
+  letter-spacing: 1.3px;
+  color: var(--ms-cyan);
+  border: 1px solid var(--ms-line);
+  padding: 8px 11px;
+  border-radius: 20px;
+}
+.clubhouse-layout {
+  display: grid;
+  grid-template-columns: 205px minmax(0, 1fr) 220px;
+}
+.clubhouse-label {
+  font-size: 8px;
+  letter-spacing: 1.8px;
+  color: var(--ms-muted);
+}
+.clubhouse-sidebar {
+  padding: 28px 14px;
+  background: color-mix(in srgb, var(--ms-night) 75%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.clubhouse-sidebar > .clubhouse-label {
+  margin: 0 12px 15px;
+}
+.clubhouse-sidebar > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  padding: 14px 12px;
+  border-radius: 9px;
+  font-size: 11px;
+  color: var(--ms-muted);
+}
+.clubhouse-sidebar > button > span {
+  margin-left: auto;
+}
+.clubhouse-sidebar > button[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--ms-lime) 12%, transparent);
+  color: var(--ms-lime);
+}
+.clubhouse-sidebar-note {
+  margin: 30px 12px;
+  padding: 20px 0;
+  border-top: 1px solid var(--ms-line);
+}
+.clubhouse-sidebar-note svg {
+  color: var(--ms-coral);
+  margin-bottom: 12px;
+}
+.clubhouse-sidebar-note strong {
+  font-size: 13px;
+  line-height: 1.5;
+  display: block;
+}
+.clubhouse-sidebar-note p {
+  color: var(--ms-muted);
+  font-size: 10px;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+.clubhouse-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: auto 12px 0;
+  font-size: 11px;
+}
+.clubhouse-profile > span {
+  width: 30px;
+  height: 30px;
+  background: var(--ms-cyan);
+  color: var(--ms-night);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.clubhouse-profile small {
+  display: block;
+  font-size: 9px;
+  color: var(--ms-muted);
+  margin-top: 4px;
+}
+.clubhouse-room {
+  min-width: 0;
+  min-height: 560px;
+  background: color-mix(in srgb, var(--ms-panel) 85%, var(--ms-night));
+}
+.clubhouse-room > header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 1px solid var(--ms-line);
+}
+.clubhouse-room > header > svg {
+  color: var(--ms-cyan);
+}
+.clubhouse-room h3 {
+  font-size: 15px;
+}
+.clubhouse-room header p {
+  color: var(--ms-muted);
+  font-size: 10px;
+  margin-top: 5px;
+}
+.clubhouse-thread {
+  padding: 24px;
+}
+.club-message {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.club-avatar {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--ms-cyan);
+  color: var(--ms-night);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.avatar-coral {
+  background: var(--ms-coral);
+}
+.club-message strong {
+  font-size: 11px;
+  display: block;
+}
+.club-message small {
+  font-size: 8px;
+  color: var(--ms-muted);
+  font-weight: 400;
+  margin-left: 6px;
+}
+.club-message p {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--ms-muted);
+  margin-top: 7px;
+}
+.club-ride-card {
+  margin: 0 0 22px 42px;
+  border: 1px solid var(--ms-line);
+  border-radius: 13px;
+  overflow: hidden;
+}
+.club-ride-art {
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(130deg, var(--ms-road-shadow), var(--ms-night));
+  display: flex;
+  align-items: center;
+  padding: 22px;
+}
+.club-ride-art > svg {
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+  width: 65%;
+  height: 100%;
+  color: var(--ms-cyan);
+  opacity: 0.4;
+}
+.club-ride-art > span {
+  font-family: "Space Grotesk";
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 1;
+  letter-spacing: -1px;
+}
+.club-ride-art > small {
+  position: absolute;
+  bottom: 13px;
+  font-size: 7px;
+  letter-spacing: 2px;
+  color: var(--ms-muted);
+}
+.club-ride-info {
+  padding: 17px;
+  display: grid;
+  gap: 9px;
+}
+.club-ride-info strong {
+  font-size: 12px;
+}
+.club-ride-info span {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--ms-muted);
+  font-size: 10px;
+}
+.club-reaction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  font-size: 10px;
+  border: 1px solid var(--ms-line);
+  border-radius: 30px;
+  margin-left: 42px;
+  color: var(--ms-lime);
+}
+.club-reaction[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--ms-lime) 10%, transparent);
+}
+.clubhouse-context {
+  border-left: 1px solid var(--ms-line);
+  padding: 28px 24px;
+}
+.clubhouse-context > div {
+  margin-top: 35px;
+}
+.clubhouse-context svg {
+  color: var(--ms-coral);
+  width: 20px;
+  margin-bottom: 14px;
+}
+.clubhouse-context h4 {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.clubhouse-context p {
+  font-size: 10px;
+  color: var(--ms-muted);
+  line-height: 1.8;
+  margin-top: 10px;
+}
+.clubhouse-context > a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--ms-lime);
+  margin-top: 35px;
+}
+.clubhouse-context > a svg {
+  margin: 0;
+}
+.clubhouse-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 4px;
+  font-size: 9px;
+  color: var(--ms-muted);
+}
+.clubhouse-caption > span {
+  letter-spacing: 1.5px;
+}
+.voice-room {
+  text-align: center;
+  position: relative;
+  padding: 45px 22px;
+  overflow: hidden;
+}
+.voice-room h4 {
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-top: 18px;
+  position: relative;
+}
+.voice-orbit {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--ms-line);
+  border-radius: 50%;
+  left: 50%;
+  top: 45px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  box-shadow:
+    0 0 0 35px color-mix(in srgb, var(--ms-cyan) 3%, transparent),
+    0 0 0 70px color-mix(in srgb, var(--ms-cyan) 2%, transparent);
+}
+.voice-members {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  position: relative;
+  margin: 35px 0;
+}
+.voice-members > div > span {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  background: var(--ms-cyan);
+  color: var(--ms-night);
+  border-radius: 20px;
+  font-size: 23px;
+  position: relative;
+}
+.voice-members > div:nth-child(2) > span {
+  background: var(--ms-coral);
+}
+.voice-members > div:nth-child(3) > span {
+  background: var(--ms-lime);
+}
+.voice-members svg {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  background: var(--ms-panel);
+  color: var(--ms-white);
+  padding: 4px;
+  box-sizing: content-box;
+  border-radius: 50%;
+}
+.voice-members small {
+  display: block;
+  margin-top: 12px;
+  font-size: 10px;
+}
+.voice-room > .ms-button {
+  position: relative;
+  font-size: 11px;
+  padding: 13px 20px;
+}
+.voice-room > p {
+  font-size: 9px;
+  color: var(--ms-muted);
+  line-height: 1.8;
+  max-width: 280px;
+  margin: 20px auto 0;
+  position: relative;
+}
+.garage-poll {
+  margin: 10px 0 25px 42px;
+  padding: 20px;
+  border: 1px solid var(--ms-line);
+  border-radius: 13px;
+}
+.garage-poll h4 {
+  font-size: 18px;
+  margin: 12px 0 20px;
+}
+.garage-poll button {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid var(--ms-line);
+  padding: 14px 0;
+  text-align: left;
+  font-size: 11px;
+}
+.garage-poll button > span {
+  color: var(--ms-coral);
+  font-size: 9px;
+}
+.garage-poll button svg {
+  margin-left: auto;
+}
+.garage-poll button:hover {
+  color: var(--ms-lime);
+}
+.experience-studio {
+  padding-top: 35px;
+}
+.experience-console {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  border: 1px solid var(--ms-line);
+  border-radius: 24px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ms-night) 85%, transparent);
+  box-shadow: 0 30px 80px color-mix(in srgb, var(--ms-night) 70%, transparent);
+}
+.experience-console .ms-tabs {
+  flex-direction: column;
+  border: 0;
+  border-right: 1px solid var(--ms-line);
+  margin: 0;
+  padding: 24px 12px;
+  gap: 8px;
+}
+.experience-console .ms-tabs button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  text-align: left;
+  border: 1px solid transparent;
+  padding: 18px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+.experience-console .ms-tabs button[aria-selected="true"] {
+  border-color: var(--ms-line);
+  background: var(--ms-panel);
+}
+.experience-tab-number {
+  font-size: 9px;
+  color: var(--ms-muted);
+}
+.experience-console .ms-tabs button > svg {
+  margin-left: auto;
+  width: 13px;
+}
+.experience-console .ms-demo-panel {
+  border-radius: 0;
+  background: radial-gradient(
+    ellipse at 80% 50%,
+    var(--ms-road-shadow),
+    transparent 70%
+  );
+  padding: 35px;
+  gap: 30px;
+  min-height: 650px;
+  grid-template-columns: 0.8fr 1.2fr;
+}
+.experience-console .ms-demo-copy h3 {
+  font-size: 29px;
+}
+.experience-console .ms-demo-copy > p {
+  font-size: 12px;
+}
+.experience-device {
+  min-width: 0;
+  border: 1px solid var(--ms-line);
+  border-radius: 20px;
+  padding: 8px;
+  background: var(--ms-night);
+  box-shadow:
+    12px 22px 0 color-mix(in srgb, var(--ms-night) 60%, transparent),
+    0 25px 65px color-mix(in srgb, var(--ms-cyan) 9%, transparent);
+}
+.experience-device-bar {
+  height: 32px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 0 10px;
+}
+.experience-device-bar > span {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background: var(--ms-line);
+}
+.experience-device-bar > span:first-child {
+  background: var(--ms-coral);
+}
+.experience-device-bar > small {
+  margin-left: auto;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: var(--ms-muted);
+}
+.experience-device .ms-widget {
+  border-radius: 13px;
+  padding: 10px;
+}
+@media (max-width: 1100px) {
+  .clubhouse-layout {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+  .clubhouse-context {
+    display: none;
+  }
+  .experience-console {
+    grid-template-columns: 150px minmax(0, 1fr);
+  }
+  .experience-console .ms-demo-panel {
+    grid-template-columns: 1fr;
+    padding: 26px;
+  }
+  .experience-console .ms-demo-copy {
+    padding: 0;
+  }
+  .experience-console .ms-demo-copy h3 {
+    max-width: 480px;
+  }
+  .experience-device {
+    max-width: 490px;
+    width: 100%;
+    justify-self: center;
+  }
+  .experience-console .ms-demo-hint {
+    margin-top: 18px;
+    padding-top: 15px;
+  }
+}
+@media (max-width: 700px) {
+  .clubhouse-section {
+    padding-top: 0;
+  }
+  .clubhouse-intro {
+    text-align: left;
+    margin-bottom: 28px;
+  }
+  .clubhouse-intro .ms-eyebrow {
+    justify-content: start;
+  }
+  .clubhouse-intro h2 {
+    font-size: 43px;
+  }
+  .clubhouse-intro > p {
+    font-size: 13px;
+  }
+  .clubhouse-toolbar {
+    padding: 16px 13px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .clubhouse-toolbar strong {
+    font-size: 11px;
+  }
+  .clubhouse-demo {
+    font-size: 6px;
+    margin-left: 52px;
+    padding: 5px 8px;
+  }
+  .clubhouse-layout {
+    display: block;
+  }
+  .clubhouse-sidebar {
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 5px;
+    border-bottom: 1px solid var(--ms-line);
+  }
+  .clubhouse-sidebar > .clubhouse-label,
+  .clubhouse-sidebar-note,
+  .clubhouse-profile {
+    display: none;
+  }
+  .clubhouse-sidebar > button {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 12px 9px;
+    font-size: 10px;
+  }
+  .clubhouse-sidebar > button > span {
+    display: none;
+  }
+  .clubhouse-sidebar > button > svg {
+    width: 13px;
+  }
+  .clubhouse-room > header {
+    padding: 18px;
+  }
+  .clubhouse-thread {
+    padding: 20px 15px;
+  }
+  .club-message small {
+    display: block;
+    margin: 5px 0;
+  }
+  .club-ride-card,
+  .garage-poll {
+    margin-left: 0;
+  }
+  .clubhouse-room {
+    min-height: 530px;
+  }
+  .clubhouse-caption {
+    display: block;
+    line-height: 1.8;
+  }
+  .clubhouse-caption p {
+    margin-top: 8px;
+  }
+  .experience-console {
+    display: block;
+  }
+  .experience-console .ms-tabs {
+    flex-direction: row;
+    overflow: auto;
+    padding: 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ms-line);
+  }
+  .experience-console .ms-tabs button {
+    padding: 12px 10px;
+    gap: 7px;
+    font-size: 11px;
+  }
+  .experience-console .ms-tabs button > svg {
+    display: none;
+  }
+  .experience-console .ms-demo-panel {
+    padding: 22px 12px;
+    min-height: 0;
+  }
+  .experience-console .ms-demo-copy {
+    padding: 0 10px;
+  }
+  .experience-console .ms-demo-copy h3 {
+    font-size: 29px;
+  }
+  .experience-device {
+    box-shadow: none;
+    padding: 5px;
+  }
+  .experience-device .ms-widget {
+    padding: 6px;
+  }
+  .atmosphere-glow {
+    filter: blur(50px);
+    width: 600px;
+  }
+  .glow-one {
+    left: -400px;
+  }
+  .glow-two {
+    right: -400px;
+  }
+  .atmosphere-grid {
+    background-size: 60px 60px;
+    opacity: 0.12;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere-glow {
+    animation: none;
+  }
+}
